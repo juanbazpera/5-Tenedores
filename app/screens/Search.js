@@ -7,11 +7,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
+    justifyContent: 'center'
+  }
 });
 
-export default function TopFive() {
+export default function Search() {
   return (
     <View style={styles.viewBody}>
       <Text>Search Screen...</Text>

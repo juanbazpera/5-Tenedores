@@ -4,45 +4,55 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Icon } from 'react-native-elements';
 
+// Screens
 import Home from '../screens/Home';
-import MyAccount from '../screens/MyAccount';
 import Search from '../screens/Search';
 import TopFive from '../screens/TopFive';
+
+// Screens MyAccount
+import MyAccount from '../screens/myaccount/MyAccount';
+import Register from '../screens/myaccount/Register';
 
 const homeScreenStack = createStackNavigator({
   Home: {
     screen: Home,
     navigationOptions: ({ navigation }) => ({
-      title: 'Home',
-    }),
-  },
+      title: 'Home'
+    })
+  }
 });
 
 const topFiveScreenStack = createStackNavigator({
   TopFive: {
     screen: TopFive,
     navigationOptions: ({ navigation }) => ({
-      title: 'Top 5 Restaurantes',
-    }),
-  },
+      title: 'Top 5 Restaurantes'
+    })
+  }
 });
 
 const searchScreenStack = createStackNavigator({
   Search: {
     screen: Search,
     navigationOptions: ({ navigation }) => ({
-      title: 'Buscar',
-    }),
-  },
+      title: 'Buscar'
+    })
+  }
 });
 
 const myAccountScreenStack = createStackNavigator({
   MyAccount: {
     screen: MyAccount,
     navigationOptions: ({ navigation }) => ({
-      title: 'Mi cuenta',
-    }),
+      title: 'Mi cuenta'
+    })
   },
+  Register: {
+    screen: Register,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Registro'
+    })
+  }
 });
 
 const RootStack = createBottomTabNavigator(
@@ -53,13 +63,13 @@ const RootStack = createBottomTabNavigator(
         tabBarLabel: 'Home',
         tabBarIcon: ({ tintColor }) => (
           <Icon
-            name='compass-outline'
-            type='material-community'
+            name="compass-outline"
+            type="material-community"
             size={22}
             color={tintColor}
           />
-        ),
-      }),
+        )
+      })
     },
     TopFive: {
       screen: topFiveScreenStack,
@@ -67,13 +77,13 @@ const RootStack = createBottomTabNavigator(
         tabBarLabel: 'Top 5',
         tabBarIcon: ({ tintColor }) => (
           <Icon
-            name='star-outline'
-            type='material-community'
+            name="star-outline"
+            type="material-community"
             size={22}
             color={tintColor}
           />
-        ),
-      }),
+        )
+      })
     },
     Search: {
       screen: searchScreenStack,
@@ -81,13 +91,13 @@ const RootStack = createBottomTabNavigator(
         tabBarLabel: 'Buscar',
         tabBarIcon: ({ tintColor }) => (
           <Icon
-            name='magnify'
-            type='material-community'
+            name="magnify"
+            type="material-community"
             size={22}
             color={tintColor}
           />
-        ),
-      }),
+        )
+      })
     },
     MyAccount: {
       screen: myAccountScreenStack,
@@ -95,25 +105,25 @@ const RootStack = createBottomTabNavigator(
         tabBarLabel: 'Mi cuenta',
         tabBarIcon: ({ tintColor }) => (
           <Icon
-            name='account-outline'
-            type='material-community'
+            name="account-outline"
+            type="material-community"
             size={22}
             color={tintColor}
           />
-        ),
-      }),
-    },
+        )
+      })
+    }
   },
   {
     // Si initialRouteName y Order no estan definidas toma el orden
     // que se declararon anteriormente
-    initialRouteName: 'Home',
+    initialRouteName: 'MyAccount',
     order: ['Home', 'TopFive', 'Search', 'MyAccount'],
     tabBarOptions: {
       inactiveTintColor: '#646464',
-      activeTintColor: '#00A680',
-    },
-  },
+      activeTintColor: '#00A680'
+    }
+  }
 );
 
 export default createAppContainer(RootStack);
