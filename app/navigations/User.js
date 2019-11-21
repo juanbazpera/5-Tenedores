@@ -12,6 +12,7 @@ import TopFive from '../screens/TopFive';
 // Screens MyAccount
 import MyAccount from '../screens/myaccount/MyAccount';
 import Register from '../screens/myaccount/Register';
+import Login from '../screens/myaccount/Login';
 
 const homeScreenStack = createStackNavigator({
   Home: {
@@ -51,6 +52,12 @@ const myAccountScreenStack = createStackNavigator({
     screen: Register,
     navigationOptions: ({ navigation }) => ({
       title: 'Registro'
+    })
+  },
+  Login: {
+    screen: Login,
+    navigationOptions: ({ navitagion }) => ({
+      title: 'Login'
     })
   }
 });
