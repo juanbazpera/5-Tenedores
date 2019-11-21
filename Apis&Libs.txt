@@ -1,0 +1,12 @@
+-- Avatars: http://avatars.adorable.io/
+-- Users (Name, email, picture, etc..): https://randomuser.me/
+-- Photos (Randoms or with category): https://source.unsplash.com/
+-- Photos (Randoms, grey scale, color, etc...): https://picsum.photos/
+-- Weather: https://www.metaweather.com
+
+-- Eslint and Prettier: https://thomlom.dev/setup-eslint-prettier-react/
+    --babel-eslint
+    Example in 5-tenedores
+    Rule to use JSX in JS "rules": { "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }], }
+
+-- Formularios: tcomb-form-native https://github.com/gcanti/tcomb-form-native
