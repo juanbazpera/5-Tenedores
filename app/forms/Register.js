@@ -1,38 +1,51 @@
 import t from 'tcomb-form-native';
-import formValidation from '../../utils/Validation';
+import formValidation from '../utils/Validation';
+import inputTemplate from './templates/Input';
 
 export const RegisterStruct = t.struct({
   name: t.String,
   email: formValidation.email,
   password: formValidation.password,
-  passwordConfirmation: formValidation.password,
+  passwordConfirmation: formValidation.password
 });
 
 export const RegisterOptions = {
   fields: {
     name: {
-      label: 'Nombre (*)',
-      placeholder: 'Inserte su nombre completo',
-      error: 'Nombre invalido',
+      template: inputTemplate,
+      config: {
+        placeholder: 'Inserte su nombre completo',
+        iconType: 'material-community',
+        iconName: 'account-outline'
+      }
     },
     email: {
-      label: 'Email (*)',
-      placeholder: 'Inserte su email',
-      error: 'Email invalido',
+      template: inputTemplate,
+      config: {
+        placeholder: 'Inserte su email',
+        iconType: 'material-community',
+        iconName: 'at'
+      }
     },
     password: {
-      label: 'Contraseña (*)',
-      placeholder: 'Inserte contraseña',
-      error: 'Contraseña invalida',
-      password: true,
-      secureTextEntry: true,
+      template: inputTemplate,
+      config: {
+        placeholder: 'Inserte contraseña',
+        password: true,
+        secureTextEntry: true,
+        iconType: 'material-community',
+        iconName: 'lock-outline'
+      }
     },
     passwordConfirmation: {
-      label: 'Repetir contraseña',
-      placeholder: 'Repetir contraseña',
-      error: 'Contraseña invalida',
-      password: true,
-      secureTextEntry: true,
-    },
-  },
+      template: inputTemplate,
+      config: {
+        placeholder: 'Repetir contraseña',
+        password: true,
+        secureTextEntry: true,
+        iconType: 'material-community',
+        iconName: 'lock-rest'
+      }
+    }
+  }
 };

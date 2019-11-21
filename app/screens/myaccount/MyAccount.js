@@ -30,6 +30,7 @@ export default class MyAccount extends React.Component {
           title="Registro"
           onPress={() => this.goToScreen('Register')}
         ></Button>
+        <Button title="Login" onPress={() => this.goToScreen('Login')}></Button>
       </View>
     );
   }
