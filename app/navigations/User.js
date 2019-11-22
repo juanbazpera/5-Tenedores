@@ -18,48 +18,48 @@ const homeScreenStack = createStackNavigator({
   Home: {
     screen: Home,
     navigationOptions: ({ navigation }) => ({
-      title: 'Home'
-    })
-  }
+      title: 'Home',
+    }),
+  },
 });
 
 const topFiveScreenStack = createStackNavigator({
   TopFive: {
     screen: TopFive,
     navigationOptions: ({ navigation }) => ({
-      title: 'Top 5 Restaurantes'
-    })
-  }
+      title: 'Top 5 Restaurantes',
+    }),
+  },
 });
 
 const searchScreenStack = createStackNavigator({
   Search: {
     screen: Search,
     navigationOptions: ({ navigation }) => ({
-      title: 'Buscar'
-    })
-  }
+      title: 'Buscar',
+    }),
+  },
 });
 
 const myAccountScreenStack = createStackNavigator({
   MyAccount: {
     screen: MyAccount,
     navigationOptions: ({ navigation }) => ({
-      title: 'Mi cuenta'
-    })
+      title: 'Mi cuenta',
+    }),
   },
   Register: {
     screen: Register,
     navigationOptions: ({ navigation }) => ({
-      title: 'Registro'
-    })
+      title: 'Registro',
+    }),
   },
   Login: {
     screen: Login,
     navigationOptions: ({ navitagion }) => ({
-      title: 'Login'
-    })
-  }
+      title: 'Login',
+    }),
+  },
 });
 
 const RootStack = createBottomTabNavigator(
@@ -75,8 +75,8 @@ const RootStack = createBottomTabNavigator(
             size={22}
             color={tintColor}
           />
-        )
-      })
+        ),
+      }),
     },
     TopFive: {
       screen: topFiveScreenStack,
@@ -89,8 +89,8 @@ const RootStack = createBottomTabNavigator(
             size={22}
             color={tintColor}
           />
-        )
-      })
+        ),
+      }),
     },
     Search: {
       screen: searchScreenStack,
@@ -103,8 +103,8 @@ const RootStack = createBottomTabNavigator(
             size={22}
             color={tintColor}
           />
-        )
-      })
+        ),
+      }),
     },
     MyAccount: {
       screen: myAccountScreenStack,
@@ -117,9 +117,9 @@ const RootStack = createBottomTabNavigator(
             size={22}
             color={tintColor}
           />
-        )
-      })
-    }
+        ),
+      }),
+    },
   },
   {
     // Si initialRouteName y Order no estan definidas toma el orden
@@ -128,9 +128,9 @@ const RootStack = createBottomTabNavigator(
     order: ['Home', 'TopFive', 'Search', 'MyAccount'],
     tabBarOptions: {
       inactiveTintColor: '#646464',
-      activeTintColor: '#00A680'
-    }
-  }
+      activeTintColor: '#00A680',
+    },
+  },
 );
 
 export default createAppContainer(RootStack);

@@ -6,7 +6,7 @@ export const RegisterStruct = t.struct({
   name: t.String,
   email: formValidation.email,
   password: formValidation.password,
-  passwordConfirmation: formValidation.password
+  passwordConfirmation: formValidation.password,
 });
 
 export const RegisterOptions = {
@@ -16,16 +16,16 @@ export const RegisterOptions = {
       config: {
         placeholder: 'Inserte su nombre completo',
         iconType: 'material-community',
-        iconName: 'account-outline'
-      }
+        iconName: 'account-outline',
+      },
     },
     email: {
       template: inputTemplate,
       config: {
         placeholder: 'Inserte su email',
         iconType: 'material-community',
-        iconName: 'at'
-      }
+        iconName: 'at',
+      },
     },
     password: {
       template: inputTemplate,
@@ -34,8 +34,8 @@ export const RegisterOptions = {
         password: true,
         secureTextEntry: true,
         iconType: 'material-community',
-        iconName: 'lock-outline'
-      }
+        iconName: 'lock-outline',
+      },
     },
     passwordConfirmation: {
       template: inputTemplate,
@@ -44,8 +44,8 @@ export const RegisterOptions = {
         password: true,
         secureTextEntry: true,
         iconType: 'material-community',
-        iconName: 'lock-rest'
-      }
-    }
-  }
+        iconName: 'lock-reset',
+      },
+    },
+  },
 };

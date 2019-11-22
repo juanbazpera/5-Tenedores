@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 export default class Login extends Component {
   constructor(props) {
@@ -22,6 +22,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 40,
-    marginRight: 40
-  }
+    marginRight: 40,
+  },
 });

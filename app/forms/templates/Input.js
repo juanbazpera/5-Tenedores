@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Input, Icon } from 'react-native-elements';
 
-export default inputTemplate = locals => {
+export default locals => {
   return (
     <View style={styles.viewContainer}>
       <Input
@@ -15,7 +15,7 @@ export default inputTemplate = locals => {
             name={locals.config.iconName}
             type={locals.config.iconType}
             size={24}
-            color="#b3b3b3"
+            color="black"
           />
         }
       />
@@ -26,6 +26,6 @@ export default inputTemplate = locals => {
 const styles = StyleSheet.create({
   viewContainer: {
     marginTop: 12,
-    marginButton: 12
-  }
+    marginBottom: 12,
+  },
 });

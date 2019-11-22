@@ -1,12 +1,16 @@
 // import liraries
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Button, Text } from 'react-native-elements';
 import t from 'tcomb-form-native';
-import Toast, { DURATION } from 'react-native-easy-toast';
-
-import { RegisterOptions, RegisterStruct } from '../../forms/Register';
+import { Button, Text } from 'react-native-elements';
+import Toast from 'react-native-easy-toast';
 import * as firebase from 'firebase';
+
+import {
+  RegisterOptions,
+  RegisterStruct,
+} from '../../forms/Register';
+
 const { Form } = t.form;
 
 export default class Register extends React.Component {
@@ -19,47 +23,60 @@ export default class Register extends React.Component {
         name: '',
         email: '',
         password: '',
-        passwordConfirmation: ''
+        passwordConfirmation: '',
       },
-      formErrorMessage: ''
+      formErrorMessage: '',
     };
+    this.formRef = null;
+    this.toastRef = null;
   }
 
+  setFormRefs = ref => {
+    this.formRef = ref;
+  };
+
+  setToastRefs = ref => {
+    this.toastRef = ref;
+  };
+
   register = () => {
-    const { password, passwordConfirmation } = this.state.formData;
+    const { password, passwordConfirmation } = this.state;
     if (password === passwordConfirmation) {
-      const validate = this.refs.registerForm.getValue();
+      const validate = this.formRef.getValue();
       if (validate) {
         this.setState({
-          formErrorMessage: ''
+          formErrorMessage: '',
         });
         firebase
           .auth()
-          .createUserWithEmailAndPassword(validate.email, validate.password)
-          .then(result => {
-            this.refs.toast.show('Registro Correcto', 100, () => {
+          .createUserWithEmailAndPassword(
+            validate.email,
+            validate.password,
+          )
+          .then(() => {
+            this.toastRef.show('Registro Correcto', 100, () => {
               const { navigation } = this.props;
               navigation.goBack();
             });
           })
-          .catch(error => {
-            this.refs.toast.show('El email ya esta en uso', 2500);
+          .catch(() => {
+            this.toastRef.show('El email ya esta en uso', 2500);
           });
       } else {
         this.setState({
-          formErrorMessage: 'Formulario Invalido'
+          formErrorMessage: 'Formulario Invalido',
         });
       }
     } else {
       this.setState({
-        formErrorMessage: 'Las contraseñas no son correctas'
+        formErrorMessage: 'Las contraseñas no son correctas',
       });
     }
   };
 
   onChangeFormRegister = formValue => {
     this.setState({
-      formData: formValue
+      formData: formValue,
     });
   };
 
@@ -68,13 +85,12 @@ export default class Register extends React.Component {
       registerOptions,
       registerStruct,
       formData,
-      formErrorMessage
+      formErrorMessage,
     } = this.state;
     return (
       <View style={styles.viewBody}>
-        <Text>Register Screen...</Text>
         <Form
-          ref="registerForm"
+          ref={ref => this.setFormRefs(ref)}
           type={registerStruct}
           options={registerOptions}
           value={formData}
@@ -87,7 +103,7 @@ export default class Register extends React.Component {
         />
         <Text styl={styles.formErrorMessage}>{formErrorMessage}</Text>
         <Toast
-          ref="toast"
+          ref={ref => this.setToastRefs(ref)}
           position="bottom"
           positionValue={150}
           fadeInDuration={1000}
@@ -104,17 +120,19 @@ const styles = StyleSheet.create({
   viewBody: {
     flex: 1,
     backgroundColor: '#fff',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginLeft: 10,
+    marginRight: 10,
   },
   buttonRegisterContainer: {
     backgroundColor: '#00a680',
     marginTop: 20,
     marginLeft: 10,
-    marginRight: 10
+    marginRight: 10,
   },
   formErrorMessage: {
     color: '#f00',
     textAlign: 'center',
-    marginTop: 30
-  }
+    marginTop: 30,
+  },
 });
