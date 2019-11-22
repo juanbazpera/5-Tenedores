@@ -23,5 +23,6 @@ module.exports = {
       1,
       { extensions: ['.js', '.jsx'] },
     ],
+    'no-use-before-define': ['error', { variables: false }],
   },
 };
