@@ -4,7 +4,8 @@ import { View, StyleSheet } from 'react-native';
 import t from 'tcomb-form-native';
 import { Button, Text } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
-import * as firebase from 'firebase';
+import PropTypes from 'prop-types';
+import firebase from 'firebase';
 
 import {
   RegisterOptions,
@@ -117,6 +118,10 @@ export default class Register extends React.Component {
     );
   }
 }
+
+Register.propTypes = {
+  navigation: PropTypes.shape.isRequired,
+};
 
 const styles = StyleSheet.create({
   viewBody: {
