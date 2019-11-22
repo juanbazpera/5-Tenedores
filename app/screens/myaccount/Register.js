@@ -40,8 +40,8 @@ export default class Register extends React.Component {
   };
 
   register = () => {
-    const { password, passwordConfirmation } = this.state;
-    if (password === passwordConfirmation) {
+    const { formData } = this.state;
+    if (formData.password === formData.passwordConfirmation) {
       const validate = this.formRef.getValue();
       if (validate) {
         this.setState({
@@ -101,7 +101,9 @@ export default class Register extends React.Component {
           title="Registrarse"
           onPress={() => this.register()}
         />
-        <Text styl={styles.formErrorMessage}>{formErrorMessage}</Text>
+        <Text style={styles.formErrorMessage}>
+          {formErrorMessage}
+        </Text>
         <Toast
           ref={ref => this.setToastRefs(ref)}
           position="bottom"
