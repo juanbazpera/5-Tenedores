@@ -55,12 +55,14 @@ export default class Register extends React.Component {
             validate.password,
           )
           .then(() => {
+            // console.log(sucess)
             this.toastRef.show('Registro Correcto', 100, () => {
               const { navigation } = this.props;
               navigation.goBack();
             });
           })
           .catch(() => {
+            // console.log(error.code);
             this.toastRef.show('El email ya esta en uso', 2500);
           });
       } else {
@@ -109,7 +111,7 @@ export default class Register extends React.Component {
         <Toast
           ref={ref => this.setToastRefs(ref)}
           position="bottom"
-          positionValue={150}
+          positionValue={250}
           fadeInDuration={1000}
           fadeOutDuration={1000}
           opacity={0.8}

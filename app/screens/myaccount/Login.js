@@ -58,13 +58,14 @@ export default class Login extends Component {
         .auth()
         .signInWithEmailAndPassword(validate.email, validate.password)
         .then(() => {
-          console.log('Login correcto');
+          // console.log(sucess);
           this.toastRef.show('Login correcto', 250, () => {
             const { navigation } = this.props;
             navigation.goBack();
           });
         })
         .catch(() => {
+          // console.log(error.code);
           this.setState({
             formErrorMessage: 'Login incorrecto',
           });

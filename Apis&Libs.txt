@@ -10,3 +10,5 @@
     Rule to use JSX in JS "rules": { "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }], }
 
 -- Formularios: tcomb-form-native https://github.com/gcanti/tcomb-form-native
+
+-- Desencriptar token de google auth en jwt.io
