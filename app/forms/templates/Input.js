@@ -10,8 +10,9 @@ export default locals => {
         password={locals.config.password}
         secureTextEntry={locals.config.secureTextEntry}
         onChangeText={value => locals.onChange(value)}
-        rightIcon={
+        leftIcon={
           <Icon
+            containerStyle={{ marginRight: 10 }}
             name={locals.config.iconName}
             type={locals.config.iconType}
             size={24}

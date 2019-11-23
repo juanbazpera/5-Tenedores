@@ -1,27 +1,157 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  StyleSheet,
+} from 'react-native';
+import { Image, Button } from 'react-native-elements';
+import PropTypes from 'prop-types';
+import t from 'tcomb-form-native';
+import * as firebase from 'firebase';
+import Toast from 'react-native-easy-toast';
+
+import LogoImage from '../../../assets/img/5-tenedores-letras-icono-logo.png';
+import { LoginOption, LoginStruct } from '../../forms/Login';
+
+const { Form } = t.form;
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      loginStruct: LoginStruct,
+      loginOption: LoginOption,
+      formData: {
+        email: '',
+        password: '',
+      },
+      formErrorMessage: '',
+    };
+    this.formRef = null;
+    this.toastRef = null;
   }
 
+  setFormRef = ref => {
+    this.formRef = ref;
+  };
+
+  setToastRef = ref => {
+    this.toastRef = ref;
+  };
+
+  onChangeFormLogin = formData => {
+    this.setState({ formData, formErrorMessage: '' });
+  };
+
+  login = () => {
+    const validate = this.formRef.props.value;
+    if (!validate) {
+      this.setState({
+        formErrorMessage: 'Email o contraseña no valida',
+      });
+    } else {
+      this.setState({
+        formErrorMessage: '',
+      });
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(validate.email, validate.password)
+        .then(() => {
+          console.log('Login correcto');
+          this.toastRef.show('Login correcto', 250, () => {
+            const { navigation } = this.props;
+            navigation.goBack();
+          });
+        })
+        .catch(() => {
+          this.setState({
+            formErrorMessage: 'Login incorrecto',
+          });
+        });
+    }
+  };
+
   render() {
+    const {
+      loginOption,
+      loginStruct,
+      formData,
+      formErrorMessage,
+    } = this.state;
     return (
-      <View>
-        <Text> Login Screen </Text>
+      <View style={styles.container}>
+        <View style={styles.imageViewStyle}>
+          <Image
+            source={LogoImage}
+            style={styles.logo}
+            PlaceholderContent={<ActivityIndicator />}
+            resizeMode="contain"
+          />
+        </View>
+        <View style={styles.viewFormStyle}>
+          <Form
+            ref={ref => this.setFormRef(ref)}
+            type={loginStruct}
+            options={loginOption}
+            value={formData}
+            onChange={formValue => this.onChangeFormLogin(formValue)}
+          />
+          <Button
+            buttonStyle={styles.buttonRegisterContainer}
+            title="Login"
+            onPress={() => this.login()}
+          />
+          <Text style={styles.formErrorMessage}>
+            {formErrorMessage}
+          </Text>
+        </View>
+        <Toast
+          ref={ref => this.setToastRef(ref)}
+          position="bottom"
+          positionValue={250}
+          fadeInDuration={1000}
+          fadeOutDuration={1000}
+          opacity={0.8}
+          textStyle={{ color: '#fff' }}
+        />
       </View>
     );
   }
 }
 
+Login.propTypes = {
+  navigation: PropTypes.shape.isRequired,
+};
+
 const styles = StyleSheet.create({
-  viewBody: {
+  container: {
     flex: 1,
-    justifyContent: 'center',
+  },
+  imageViewStyle: {
     alignItems: 'center',
     marginLeft: 40,
     marginRight: 40,
+    marginTop: 40,
+  },
+  logo: {
+    width: 200,
+    height: 200,
+  },
+  viewFormStyle: {
+    marginLeft: 20,
+    marginRight: 10,
+    marginTop: 10,
+  },
+  buttonRegisterContainer: {
+    backgroundColor: '#00a680',
+    marginTop: 20,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  formErrorMessage: {
+    color: '#f00',
+    textAlign: 'center',
+    marginTop: 30,
   },
 });

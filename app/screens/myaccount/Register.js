@@ -5,7 +5,7 @@ import t from 'tcomb-form-native';
 import { Button, Text } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
 import PropTypes from 'prop-types';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 
 import {
   RegisterOptions,
@@ -43,7 +43,7 @@ export default class Register extends React.Component {
   register = () => {
     const { formData } = this.state;
     if (formData.password === formData.passwordConfirmation) {
-      const validate = this.formRef.getValue();
+      const validate = this.formRef.props.value;
       if (validate) {
         this.setState({
           formErrorMessage: '',
@@ -78,6 +78,7 @@ export default class Register extends React.Component {
   onChangeFormRegister = formValue => {
     this.setState({
       formData: formValue,
+      formErrorMessage: '',
     });
   };
 

@@ -24,5 +24,9 @@ module.exports = {
       { extensions: ['.js', '.jsx'] },
     ],
     'no-use-before-define': ['error', { variables: false }],
+    'react/jsx-wrap-multilines': [
+      'error',
+      { arrow: true, return: true, declaration: true },
+    ],
   },
 };
