@@ -5,14 +5,21 @@ import {
   ActivityIndicator,
   StyleSheet,
 } from 'react-native';
-import { Image, Button } from 'react-native-elements';
+import {
+  Image,
+  Button,
+  Divider,
+  SocialIcon,
+} from 'react-native-elements';
 import PropTypes from 'prop-types';
 import t from 'tcomb-form-native';
 import * as firebase from 'firebase';
+import * as Facebook from 'expo-facebook';
 import Toast from 'react-native-easy-toast';
 
 import LogoImage from '../../../assets/img/5-tenedores-letras-icono-logo.png';
 import { LoginOption, LoginStruct } from '../../forms/Login';
+import facebookApi from '../../utils/Social';
 
 const { Form } = t.form;
 
@@ -73,6 +80,32 @@ export default class Login extends Component {
     }
   };
 
+  loginFacebook = async () => {
+    try {
+      console.log('Facebook api: ', facebookApi);
+      const {
+        type,
+        token,
+      } = await Facebook.logInWithReadPermissionsAsync(
+        facebookApi.application_id,
+        { permissions: facebookApi.permission },
+      );
+      if (type === 'success') {
+        const response = await fetch(
+          `https://graph.facebook.com/me?access_token=${token}`,
+        );
+        console.log(
+          'Logged in!',
+          `Hi ${(await response.json()).name}!`,
+        );
+      } else {
+        // type === 'cancel'
+      }
+    } catch ({ messege }) {
+      console.log('Facebook login error: ', messege);
+    }
+  };
+
   render() {
     const {
       loginOption,
@@ -106,6 +139,14 @@ export default class Login extends Component {
           <Text style={styles.formErrorMessage}>
             {formErrorMessage}
           </Text>
+          <Divider style={styles.divider} />
+          <SocialIcon
+            iconStyle={{}}
+            title="Inicia sesion con Facebook"
+            button
+            type="facebook"
+            onPress={() => this.loginFacebook()}
+          />
         </View>
         <Toast
           ref={ref => this.setToastRef(ref)}
@@ -154,5 +195,9 @@ const styles = StyleSheet.create({
     color: '#f00',
     textAlign: 'center',
     marginTop: 30,
+  },
+  divider: {
+    backgroundColor: '#00a680',
+    marginBottom: 10,
   },
 });
