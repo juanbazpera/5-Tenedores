@@ -5,6 +5,8 @@ import { Button } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import * as firebase from 'firebase';
 
+import MyAccountGuest from '../../components/MyAccount/MyAccountGuest';
+
 const styles = StyleSheet.create({
   viewBody: {
     flex: 1,
@@ -15,8 +17,8 @@ const styles = StyleSheet.create({
 });
 
 export default class MyAccount extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       login: false,
     };
@@ -60,22 +62,11 @@ export default class MyAccount extends React.Component {
         </View>
       );
     }
-    return (
-      <View style={styles.viewBody}>
-        <Text>MyAccount Screen...</Text>
-        <Button
-          title="Registro"
-          onPress={() => this.goToScreen('Register')}
-        />
-        <Button
-          title="Login"
-          onPress={() => this.goToScreen('Login')}
-        />
-      </View>
-    );
+    return <MyAccountGuest goToScreen={this.goToScreen} />;
   }
 }
 
 MyAccount.propTypes = {
-  navigation: PropTypes.shape.isRequired,
+  navigation: PropTypes.shape({ navigate: PropTypes.func })
+    .isRequired,
 };

@@ -123,7 +123,7 @@ export default class Register extends React.Component {
 }
 
 Register.propTypes = {
-  navigation: PropTypes.shape.isRequired,
+  navigation: PropTypes.shape({ goBack: PropTypes.func }).isRequired,
 };
 
 const styles = StyleSheet.create({

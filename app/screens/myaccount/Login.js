@@ -82,7 +82,6 @@ export default class Login extends Component {
 
   loginFacebook = async () => {
     try {
-      console.log('Facebook api: ', facebookApi);
       const {
         type,
         token,
@@ -91,15 +90,46 @@ export default class Login extends Component {
         { permissions: facebookApi.permission },
       );
       if (type === 'success') {
-        const response = await fetch(
-          `https://graph.facebook.com/me?access_token=${token}`,
+        const credentials = firebase.auth.FacebookAuthProvider.credential(
+          token,
         );
-        console.log(
-          'Logged in!',
-          `Hi ${(await response.json()).name}!`,
-        );
+        let userName = null;
+        try {
+          const response = await fetch(
+            `https://graph.facebook.com/me?access_token=${token}`,
+          );
+          userName = `Inicio de sesion para ${
+            (await response.json()).name
+          }!`;
+        } catch (ex) {
+          console.log('No se pudo obtener el nombre de usuario');
+        }
+        firebase
+          .auth()
+          .signInWithCredential(credentials)
+          .then(() => {
+            this.toastRef.show(
+              userName !== null
+                ? userName
+                : 'Inicio de sesion exitoso!',
+              300,
+              () => {
+                const { navigation } = this.props;
+                navigation.goBack();
+              },
+            );
+          })
+          .catch(err => {
+            this.toastRef.show(
+              'Error accediendo con Facebook, intentelo mas tarde',
+              300,
+            );
+            console.log(err);
+          });
+      } else if (type === 'cancel') {
+        this.toastRef.show('Inicio de sesion cancelado', 300);
       } else {
-        // type === 'cancel'
+        this.toastRef.show('Error desconocido', 300);
       }
     } catch ({ messege }) {
       console.log('Facebook login error: ', messege);
@@ -163,7 +193,7 @@ export default class Login extends Component {
 }
 
 Login.propTypes = {
-  navigation: PropTypes.shape.isRequired,
+  navigation: PropTypes.shape({ goBack: PropTypes.func }).isRequired,
 };
 
 const styles = StyleSheet.create({
