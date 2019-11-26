@@ -1,20 +1,10 @@
 // import liraries
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Button } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import * as firebase from 'firebase';
 
 import MyAccountGuest from '../../components/MyAccount/MyAccountGuest';
-
-const styles = StyleSheet.create({
-  viewBody: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+import MyAccountUser from '../../components/MyAccount/MyAccountUser';
 
 export default class MyAccount extends React.Component {
   constructor(props) {
@@ -52,15 +42,7 @@ export default class MyAccount extends React.Component {
   render() {
     const { login } = this.state;
     if (login) {
-      return (
-        <View style={styles.viewBody}>
-          <Text>Logueado correctamente</Text>
-          <Button
-            title="Cerrar sesion"
-            onPress={() => this.logout()}
-          />
-        </View>
-      );
+      return <MyAccountUser logout={this.logout} />;
     }
     return <MyAccountGuest goToScreen={this.goToScreen} />;
   }

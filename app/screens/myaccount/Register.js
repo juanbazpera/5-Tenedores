@@ -1,11 +1,13 @@
 // import liraries
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import t from 'tcomb-form-native';
-import { Button, Text } from 'react-native-elements';
+import { Button, Text, Image } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
 import PropTypes from 'prop-types';
 import * as firebase from 'firebase';
+
+import LogoImage from '../../../assets/img/5-tenedores-letras-icono-logo.png';
 
 import {
   RegisterOptions,
@@ -93,6 +95,14 @@ export default class Register extends React.Component {
     } = this.state;
     return (
       <View style={styles.viewBody}>
+        <View style={styles.imageViewStyle}>
+          <Image
+            source={LogoImage}
+            style={styles.logo}
+            PlaceholderContent={<ActivityIndicator />}
+            resizeMode="contain"
+          />
+        </View>
         <Form
           ref={ref => this.setFormRefs(ref)}
           type={registerStruct}
@@ -112,8 +122,8 @@ export default class Register extends React.Component {
           ref={ref => this.setToastRefs(ref)}
           position="bottom"
           positionValue={250}
-          fadeInDuration={1000}
-          fadeOutDuration={1000}
+          fadeInDuration={250}
+          fadeOutDuration={250}
           opacity={0.8}
           textStyle={{ color: '#fff' }}
         />
@@ -133,6 +143,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginLeft: 10,
     marginRight: 10,
+  },
+  logo: {
+    width: 200,
+    height: 200,
+  },
+  imageViewStyle: {
+    alignItems: 'center',
+    marginLeft: 40,
+    marginRight: 40,
+    marginTop: 30,
   },
   buttonRegisterContainer: {
     backgroundColor: '#00a680',

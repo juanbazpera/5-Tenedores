@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { Component } from 'react';
 import {
   View,
@@ -143,6 +144,7 @@ export default class Login extends Component {
       formData,
       formErrorMessage,
     } = this.state;
+    const { navigation } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.imageViewStyle}>
@@ -166,6 +168,17 @@ export default class Login extends Component {
             title="Login"
             onPress={() => this.login()}
           />
+          <Text style={styles.textRegister}>
+            ¿Aun no tienes cuenta?{' '}
+            <Text
+              style={styles.registerButton}
+              onPress={() => navigation.navigate('Register')}
+            >
+              {' '}
+              Registrarse
+            </Text>
+          </Text>
+
           <Text style={styles.formErrorMessage}>
             {formErrorMessage}
           </Text>
@@ -193,7 +206,10 @@ export default class Login extends Component {
 }
 
 Login.propTypes = {
-  navigation: PropTypes.shape({ goBack: PropTypes.func }).isRequired,
+  navigation: PropTypes.shape({
+    goBack: PropTypes.func,
+    navigate: PropTypes.func,
+  }).isRequired,
 };
 
 const styles = StyleSheet.create({
@@ -204,7 +220,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 40,
     marginRight: 40,
-    marginTop: 40,
+    marginTop: 30,
   },
   logo: {
     width: 200,
@@ -225,9 +241,19 @@ const styles = StyleSheet.create({
     color: '#f00',
     textAlign: 'center',
     marginTop: 30,
+    marginBottom: 20,
   },
   divider: {
     backgroundColor: '#00a680',
     marginBottom: 10,
+  },
+  textRegister: {
+    marginTop: 15,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  registerButton: {
+    fontWeight: 'bold',
+    color: '#00a680',
   },
 });
