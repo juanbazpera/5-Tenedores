@@ -17,6 +17,7 @@ import t from 'tcomb-form-native';
 import * as firebase from 'firebase';
 import * as Facebook from 'expo-facebook';
 import Toast from 'react-native-easy-toast';
+import * as log from 'loglevel';
 
 import LogoImage from '../../../assets/img/5-tenedores-letras-icono-logo.png';
 import { LoginOption, LoginStruct } from '../../forms/Login';
@@ -103,7 +104,8 @@ export default class Login extends Component {
             (await response.json()).name
           }!`;
         } catch (ex) {
-          console.log('No se pudo obtener el nombre de usuario');
+          log.trace(ex);
+          log.error('No se pudo obtener el nombre de usuario');
         }
         firebase
           .auth()
@@ -125,7 +127,7 @@ export default class Login extends Component {
               'Error accediendo con Facebook, intentelo mas tarde',
               300,
             );
-            console.log(err);
+            log.error(err);
           });
       } else if (type === 'cancel') {
         this.toastRef.show('Inicio de sesion cancelado', 300);
@@ -133,7 +135,7 @@ export default class Login extends Component {
         this.toastRef.show('Error desconocido', 300);
       }
     } catch ({ messege }) {
-      console.log('Facebook login error: ', messege);
+      log.error('Facebook login error: ', messege);
     }
   };
 

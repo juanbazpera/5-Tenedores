@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import * as firebase from 'firebase';
 
 import MyAccountGuest from '../../components/MyAccount/MyAccountGuest';
-import MyAccountUser from '../../components/MyAccount/MyAccountUser';
+import MyAccountUser from '../../components/MyAccount/MyAccountUser/MyAccountUser';
 
 export default class MyAccount extends React.Component {
   constructor(props) {
