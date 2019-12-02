@@ -81,8 +81,4 @@ const RootStack = createBottomTabNavigator(
   },
 );
 
-RootStack.proptypes = {
-  tintColor: PropTypes.string.isRequired,
-};
-
 export default createAppContainer(RootStack);
