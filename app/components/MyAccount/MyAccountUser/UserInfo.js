@@ -1,58 +1,47 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import * as firebase from 'firebase';
 
 import UpdateUserInfo from './UpdateUserInfo';
 
-export default class UserInfo extends Component {
-  constructor(state) {
-    super(state);
-    this.state({
-      userInfo: {},
-    });
-  }
+export default function UserInfo() {
+  const [userInfo, setUserInfo] = useState({});
 
-  componentDidMount = async () => {
-    await this.getUserInfo();
-  };
-
-  getUserInfo = () => {
-    const user = firebase.auth().currentUser;
+  const getUserInfo = async () => {
+    const user = await firebase.auth().currentUser;
     user.providerData.forEach(userInfo => {
-      this.setState({
-        userInfo,
-      });
+      setUserInfo(userInfo);
     });
   };
 
-  checkUserAvatar = photoURL => {
-    return photoURL
-      ? photoURL
-      : 'https://api.adorable.io/avatars/285/abott@adorable.png';
+  useEffect(() => {
+    getUserInfo();
+  }, [userInfo]);
+
+  const checkUserAvatar = photoURL => {
+    return (
+      photoURL ||
+      'https://api.adorable.io/avatars/285/abott@adorable.png'
+    );
   };
 
-  render() {
-    const { userInfo } = this.state;
-    const photoURL = this.checkUserAvatar(userInfo.photoURL);
-    return (
-      <View>
-        <View style={styles.viewUserInfo}>
-          <Avatar
-            rounded
-            size="large"
-            source={{ uri: photoURL }}
-            containerStyle={styles.userInfoAvatar}
-          />
-          <Text style={styles.displayName}>
-            {userInfo.displayName}
-          </Text>
-          <Text>{userInfo.email}</Text>
-        </View>
-        <UpdateUserInfo />
+  const photoURL = checkUserAvatar(userInfo.photoURL);
+  return (
+    <View>
+      <View style={styles.viewUserInfo}>
+        <Avatar
+          rounded
+          size="large"
+          source={{ uri: photoURL }}
+          containerStyle={styles.userInfoAvatar}
+        />
+        <Text style={styles.displayName}>{userInfo.displayName}</Text>
+        <Text>{userInfo.email}</Text>
       </View>
-    );
-  }
+      <UpdateUserInfo />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
