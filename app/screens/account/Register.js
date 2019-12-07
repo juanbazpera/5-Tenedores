@@ -1,5 +1,5 @@
 // import liraries
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import t from 'tcomb-form-native';
 import { Button, Text, Image } from 'react-native-elements';
@@ -16,40 +16,26 @@ import {
 
 const { Form } = t.form;
 
-export default class Register extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      registerStruct: RegisterStruct,
-      registerOptions: RegisterOptions,
-      formData: {
-        name: '',
-        email: '',
-        password: '',
-        passwordConfirmation: '',
-      },
-      formErrorMessage: '',
-    };
-    this.formRef = null;
-    this.toastRef = null;
-  }
+export default function Register(props) {
+  const registerStruct = RegisterStruct;
+  const registerOptions = RegisterOptions;
 
-  setFormRefs = ref => {
-    this.formRef = ref;
-  };
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    passwordConfirmation: '',
+  });
 
-  setToastRefs = ref => {
-    this.toastRef = ref;
-  };
+  const [formErrorMessage, setFormErrorMessage] = useState('');
+  const [formRef, setFormRef] = useState('');
+  const [toastRef, setToastRef] = useState('');
 
-  register = () => {
-    const { formData } = this.state;
+  const register = () => {
     if (formData.password === formData.passwordConfirmation) {
-      const validate = this.formRef.props.value;
+      const validate = formRef.props.value;
       if (validate) {
-        this.setState({
-          formErrorMessage: '',
-        });
+        setFormErrorMessage('');
         firebase
           .auth()
           .createUserWithEmailAndPassword(
@@ -58,78 +44,62 @@ export default class Register extends React.Component {
           )
           .then(() => {
             // console.log(sucess)
-            this.toastRef.show('Registro Correcto', 100, () => {
-              const { navigation } = this.props;
+            toastRef.show('Registro Correcto', 100, () => {
+              const { navigation } = props;
               navigation.goBack();
             });
           })
           .catch(() => {
             // console.log(error.code);
-            this.toastRef.show('El email ya esta en uso', 2500);
+            toastRef.show('El email ya esta en uso', 2500);
           });
       } else {
-        this.setState({
-          formErrorMessage: 'Formulario Invalido',
-        });
+        setFormErrorMessage('Formulario invalido');
       }
     } else {
-      this.setState({
-        formErrorMessage: 'Las contraseñas no son correctas',
-      });
+      setFormErrorMessage('Las contraseñas no son correctas');
     }
   };
 
-  onChangeFormRegister = formValue => {
-    this.setState({
-      formData: formValue,
-      formErrorMessage: '',
-    });
+  const onChangeFormRegister = formValue => {
+    setFormData(formValue);
+    setFormErrorMessage('');
   };
 
-  render() {
-    const {
-      registerOptions,
-      registerStruct,
-      formData,
-      formErrorMessage,
-    } = this.state;
-    return (
-      <View style={styles.viewBody}>
-        <View style={styles.imageViewStyle}>
-          <Image
-            source={LogoImage}
-            style={styles.logo}
-            PlaceholderContent={<ActivityIndicator />}
-            resizeMode="contain"
-          />
-        </View>
-        <Form
-          ref={ref => this.setFormRefs(ref)}
-          type={registerStruct}
-          options={registerOptions}
-          value={formData}
-          onChange={formValue => this.onChangeFormRegister(formValue)}
-        />
-        <Button
-          buttonStyle={styles.buttonRegisterContainer}
-          title="Registrarse"
-          onPress={() => this.register()}
-        />
-        <Text style={styles.formErrorMessage}>
-          {formErrorMessage}
-        </Text>
-        <Toast
-          ref={ref => this.setToastRefs(ref)}
-          position="bottom"
-          positionValue={250}
-          fadeInDuration={250}
-          fadeOutDuration={250}
-          opacity={0.8}
-          textStyle={{ color: '#fff' }}
+  return (
+    <View style={styles.viewBody}>
+      <View style={styles.imageViewStyle}>
+        <Image
+          source={LogoImage}
+          style={styles.logo}
+          PlaceholderContent={<ActivityIndicator />}
+          resizeMode="contain"
         />
       </View>
-    );
-  }
+      <Form
+        ref={ref => setFormRef(ref)}
+        type={registerStruct}
+        options={registerOptions}
+        value={formData}
+        onChange={formValue => onChangeFormRegister(formValue)}
+      />
+      <Button
+        buttonStyle={styles.buttonRegisterContainer}
+        title="Registrarse"
+        onPress={() => register()}
+      />
+      <Text style={styles.formErrorMessage}>{formErrorMessage}</Text>
+      <Toast
+        ref={ref => setToastRef(ref)}
+        position="bottom"
+        positionValue={250}
+        fadeInDuration={250}
+        fadeOutDuration={250}
+        opacity={0.8}
+        textStyle={{ color: '#fff' }}
+      />
+    </View>
+  );
 }
 
 Register.propTypes = {

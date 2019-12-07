@@ -1,6 +1,5 @@
 import React from 'react';
 import { createAppContainer } from 'react-navigation';
-import PropTypes from 'prop-types';
 
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Icon } from 'react-native-elements';

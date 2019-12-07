@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Image } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import * as firebase from 'firebase';
 
@@ -10,8 +10,8 @@ export default function UserInfo() {
 
   const getUserInfo = async () => {
     const user = await firebase.auth().currentUser;
-    user.providerData.forEach(userInfo => {
-      setUserInfo(userInfo);
+    user.providerData.forEach(userInfoValue => {
+      setUserInfo(userInfoValue);
     });
   };
 
@@ -35,6 +35,10 @@ export default function UserInfo() {
           size="large"
           source={{ uri: photoURL }}
           containerStyle={styles.userInfoAvatar}
+        />
+        <Image
+          style={{ width: 50, height: 50 }}
+          source={{ uri: photoURL }}
         />
         <Text style={styles.displayName}>{userInfo.displayName}</Text>
         <Text>{userInfo.email}</Text>
