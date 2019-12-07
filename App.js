@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import * as firebase from 'firebase';
-import UserNavigation from './app/navigations/User';
+import Navigation from './app/navigations/Navigations';
 import firebaseConfig from './app/utils/FireBase';
 
 firebase.initializeApp(firebaseConfig);
@@ -9,7 +9,7 @@ firebase.initializeApp(firebaseConfig);
 export default function App() {
   return (
     <View style={styles.container}>
-      <UserNavigation />
+      <Navigation />
     </View>
   );
 }
