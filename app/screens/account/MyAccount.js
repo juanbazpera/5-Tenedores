@@ -9,15 +9,14 @@ import MyAccountUser from '../../components/MyAccount/MyAccountUser';
 export default function MyAccount(props) {
   const [login, setLogin] = useState(false);
 
-  const isUserLogin = async () => {
-    await firebase.auth().onAuthStateChanged(isLoggin => {
-      setLogin(isLoggin);
-    });
-  };
-
   useEffect(() => {
-    setLogin(isUserLogin());
-  }, [login]);
+    const isUserLogin = async () => {
+      await firebase.auth().onAuthStateChanged(isLoggin => {
+        setLogin(isLoggin);
+      });
+    };
+    setLogin(() => isUserLogin());
+  }, []);
 
   const goToScreen = nameScreen => {
     const { navigation } = props;
