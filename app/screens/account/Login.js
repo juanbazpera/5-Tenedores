@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-one-expression-per-line */
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -25,64 +25,48 @@ import facebookApi from '../../utils/Social';
 
 const { Form } = t.form;
 
-export default class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loginStruct: LoginStruct,
-      loginOption: LoginOption,
-      formData: {
-        email: '',
-        password: '',
-      },
-      formErrorMessage: '',
-    };
-    this.formRef = null;
-    this.toastRef = null;
-  }
+export default function Login(props) {
+  const loginStruct = LoginStruct;
+  const loginOption = LoginOption;
 
-  setFormRef = ref => {
-    this.formRef = ref;
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const [formErrorMessage, setFormErrorMessage] = useState('');
+  const [formRef, setFormRef] = useState('');
+  const [toastRef, setToastRef] = useState('');
+
+  const onChangeFormLogin = formDataValue => {
+    setFormData(formDataValue);
+    setFormErrorMessage('');
   };
 
-  setToastRef = ref => {
-    this.toastRef = ref;
-  };
-
-  onChangeFormLogin = formData => {
-    this.setState({ formData, formErrorMessage: '' });
-  };
-
-  login = () => {
-    const validate = this.formRef.props.value;
+  const loginEmail = () => {
+    const validate = formRef.props.value;
     if (!validate) {
-      this.setState({
-        formErrorMessage: 'Email o contraseña no valida',
-      });
+      setFormErrorMessage('Email o contraseña no valido');
     } else {
-      this.setState({
-        formErrorMessage: '',
-      });
+      setFormErrorMessage('');
       firebase
         .auth()
         .signInWithEmailAndPassword(validate.email, validate.password)
         .then(() => {
           // console.log(sucess);
-          this.toastRef.show('Login correcto', 250, () => {
-            const { navigation } = this.props;
+          toastRef.show('Login correcto', 250, () => {
+            const { navigation } = props;
             navigation.goBack();
           });
         })
         .catch(() => {
           // console.log(error.code);
-          this.setState({
-            formErrorMessage: 'Login incorrecto',
-          });
+          setFormErrorMessage('Login incorrecto');
         });
     }
   };
 
-  loginFacebook = async () => {
+  const loginFacebook = async () => {
     try {
       const {
         type,
@@ -111,100 +95,92 @@ export default class Login extends Component {
           .auth()
           .signInWithCredential(credentials)
           .then(() => {
-            this.toastRef.show(
+            toastRef.show(
               userName !== null
                 ? userName
                 : 'Inicio de sesion exitoso!',
               300,
               () => {
-                const { navigation } = this.props;
+                const { navigation } = props;
                 navigation.goBack();
               },
             );
           })
           .catch(err => {
-            this.toastRef.show(
+            toastRef.show(
               'Error accediendo con Facebook, intentelo mas tarde',
               300,
             );
             log.error(err);
           });
       } else if (type === 'cancel') {
-        this.toastRef.show('Inicio de sesion cancelado', 300);
+        toastRef.show('Inicio de sesion cancelado', 300);
       } else {
-        this.toastRef.show('Error desconocido', 300);
+        toastRef.show('Error desconocido', 300);
       }
     } catch ({ messege }) {
       log.error('Facebook login error: ', messege);
     }
   };
 
-  render() {
-    const {
-      loginOption,
-      loginStruct,
-      formData,
-      formErrorMessage,
-    } = this.state;
-    const { navigation } = this.props;
-    return (
-      <View style={styles.container}>
-        <View style={styles.imageViewStyle}>
-          <Image
-            source={LogoImage}
-            style={styles.logo}
-            PlaceholderContent={<ActivityIndicator />}
-            resizeMode="contain"
-          />
-        </View>
-        <View style={styles.viewFormStyle}>
-          <Form
-            ref={ref => this.setFormRef(ref)}
-            type={loginStruct}
-            options={loginOption}
-            value={formData}
-            onChange={formValue => this.onChangeFormLogin(formValue)}
-          />
-          <Button
-            buttonStyle={styles.buttonRegisterContainer}
-            title="Login"
-            onPress={() => this.login()}
-          />
-          <Text style={styles.textRegister}>
-            ¿Aun no tienes cuenta?{' '}
-            <Text
-              style={styles.registerButton}
-              onPress={() => navigation.navigate('Register')}
-            >
-              {' '}
-              Registrarse
-            </Text>
-          </Text>
-
-          <Text style={styles.formErrorMessage}>
-            {formErrorMessage}
-          </Text>
-          <Divider style={styles.divider} />
-          <SocialIcon
-            iconStyle={{}}
-            title="Inicia sesion con Facebook"
-            button
-            type="facebook"
-            onPress={() => this.loginFacebook()}
-          />
-        </View>
-        <Toast
-          ref={ref => this.setToastRef(ref)}
-          position="bottom"
-          positionValue={250}
-          fadeInDuration={1000}
-          fadeOutDuration={1000}
-          opacity={0.8}
-          textStyle={{ color: '#fff' }}
+  const { navigation } = props;
+  return (
+    <View style={styles.container}>
+      <View style={styles.imageViewStyle}>
+        <Image
+          source={LogoImage}
+          style={styles.logo}
+          PlaceholderContent={<ActivityIndicator />}
+          resizeMode="contain"
         />
       </View>
-    );
-  }
+      <View style={styles.viewFormStyle}>
+        <Form
+          ref={ref => setFormRef(ref)}
+          type={loginStruct}
+          options={loginOption}
+          value={formData}
+          onChange={formValue => onChangeFormLogin(formValue)}
+        />
+        <Button
+          buttonStyle={styles.buttonRegisterContainer}
+          title="Login"
+          onPress={() => loginEmail()}
+        />
+        <Text style={styles.textRegister}>
+          ¿Aun no tienes cuenta?{' '}
+          <Text
+            style={styles.registerButton}
+            onPress={() => navigation.navigate('Register')}
+          >
+            {' '}
+            Registrarse
+          </Text>
+        </Text>
+
+        <Text style={styles.formErrorMessage}>
+          {formErrorMessage}
+        </Text>
+        <Divider style={styles.divider} />
+        <SocialIcon
+          iconStyle={{}}
+          title="Inicia sesion con Facebook"
+          button
+          type="facebook"
+          onPress={() => loginFacebook()}
+        />
+      </View>
+      <Toast
+        ref={ref => setToastRef(ref)}
+        position="bottom"
+        positionValue={250}
+        fadeInDuration={1000}
+        fadeOutDuration={1000}
+        opacity={0.8}
+        textStyle={{ color: '#fff' }}
+      />
+    </View>
+  );
 }
 
 Login.propTypes = {

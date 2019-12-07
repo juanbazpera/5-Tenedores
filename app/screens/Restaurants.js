@@ -7,14 +7,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });
 
-export default function TopFive() {
+// create a component
+export default function Restaurants() {
   return (
     <View style={styles.viewBody}>
-      <Text>TopFive Screen...</Text>
+      <Text>Home Screen...</Text>
     </View>
   );
 }

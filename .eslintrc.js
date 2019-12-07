@@ -17,7 +17,7 @@ module.exports = {
     sourceType: 'module',
   },
   parser: 'babel-eslint',
-  plugins: ['react', 'prettier'],
+  plugins: ['react', 'prettier', 'react-hooks'],
   rules: {
     'react/jsx-filename-extension': [
       1,
@@ -28,5 +28,7 @@ module.exports = {
       'error',
       { arrow: true, return: true, declaration: true },
     ],
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
   },
 };
