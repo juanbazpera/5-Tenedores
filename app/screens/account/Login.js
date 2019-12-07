@@ -1,17 +1,13 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  ActivityIndicator,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import {
   Image,
   Button,
   Divider,
   SocialIcon,
 } from 'react-native-elements';
+import { withNavigation } from 'react-navigation';
 import PropTypes from 'prop-types';
 import t from 'tcomb-form-native';
 import * as firebase from 'firebase';
@@ -25,7 +21,7 @@ import facebookApi from '../../utils/Social';
 
 const { Form } = t.form;
 
-export default function Login(props) {
+function Login(props) {
   const loginStruct = LoginStruct;
   const loginOption = LoginOption;
 
@@ -125,16 +121,13 @@ export default function Login(props) {
 
   const { navigation } = props;
   return (
-    <View style={styles.container}>
-      <View style={styles.imageViewStyle}>
-        <Image
-          source={LogoImage}
-          style={styles.logo}
-          PlaceholderContent={<ActivityIndicator />}
-          resizeMode="contain"
-        />
-      </View>
-      <View style={styles.viewFormStyle}>
+    <ScrollView>
+      <Image
+        source={LogoImage}
+        style={styles.logo}
+        resizeMode="contain"
+      />
+      <View style={styles.viewContainer}>
         <Form
           ref={ref => setFormRef(ref)}
           type={loginStruct}
@@ -179,7 +172,7 @@ export default function Login(props) {
         opacity={0.8}
         textStyle={{ color: '#fff' }}
       />
-    </View>
+    </ScrollView>
   );
 }
 
@@ -194,17 +187,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  imageViewStyle: {
-    alignItems: 'center',
-    marginLeft: 40,
-    marginRight: 40,
-    marginTop: 30,
-  },
   logo: {
-    width: 200,
-    height: 200,
+    width: '100%',
+    height: 150,
+    marginTop: 50,
   },
-  viewFormStyle: {
+  viewContainer: {
     marginLeft: 20,
     marginRight: 10,
     marginTop: 10,
@@ -235,3 +223,5 @@ const styles = StyleSheet.create({
     color: '#00a680',
   },
 });
+
+export default withNavigation(Login);

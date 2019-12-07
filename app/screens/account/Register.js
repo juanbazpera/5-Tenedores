@@ -1,6 +1,7 @@
 // import liraries
 import React, { useState } from 'react';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import { withNavigation } from 'react-navigation';
 import t from 'tcomb-form-native';
 import { Button, Text, Image } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
@@ -16,7 +17,7 @@ import {
 
 const { Form } = t.form;
 
-export default function Register(props) {
+function Register(props) {
   const registerStruct = RegisterStruct;
   const registerOptions = RegisterOptions;
 
@@ -136,3 +137,5 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
 });
+
+export default withNavigation(Register);

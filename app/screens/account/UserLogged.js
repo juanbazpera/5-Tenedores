@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 import PropTypes from 'prop-types';
 
-import UserInfo from './UserInfo';
+import UserInfo from '../../components/MyAccount/MyAccountUser/UserInfo';
 
 // create a component
 export default function MyAccountUser(props) {
