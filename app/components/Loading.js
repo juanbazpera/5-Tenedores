@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  ActivityIndicator,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { Overlay } from 'react-native-elements';
 
