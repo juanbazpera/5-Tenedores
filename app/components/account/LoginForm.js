@@ -72,7 +72,7 @@ const LoginForm = props => {
         containerStyle={styles.containerLoginBtn}
         onPress={() => login()}
       />
-      <Loading text="Logueando" isVisible={isVisibleLoading} />
+      <Loading text="Iniciando sesión" isVisible={isVisibleLoading} />
     </View>
   );
 };

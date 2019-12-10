@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { useRef } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Image, Divider, SocialIcon } from 'react-native-elements';
+import { Image, Divider } from 'react-native-elements';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-easy-toast';
 import { withNavigation } from 'react-navigation';
@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import LoginForm from '../../components/account/LoginForm';
 
 import LogoImage from '../../../assets/img/5-tenedores-letras-icono-logo.png';
-import facebookApi from '../../utils/Social';
+import LoginFacebook from '../../components/account/LoginFacebook';
 
 function Login(props) {
   const toastRef = useRef();
@@ -25,7 +25,7 @@ function Login(props) {
       <LoginForm toastRef={toastRef} />
       <CreateAccount navigation={navigation} />
       <Divider style={styles.divider} />
-      <SocialIcon title="Inicia sesion con Facebook" button type="facebook" onPress={() => {}} />
+      <LoginFacebook toastRef={toastRef} navigation={navigation} />
       <Toast ref={toastRef} position="bottom" positionValue={250} opacity={0.8} />
     </KeyboardAwareScrollView>
   );
