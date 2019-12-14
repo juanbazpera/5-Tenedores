@@ -2604,7 +2604,7 @@ axios-retry@^3.0.2:
   dependencies:
     is-retry-allowed "^1.1.0"
 
-axios@0.19.0:
+axios@0.19.0, axios@^0.19.0:
   version "0.19.0"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.0.tgz#8e09bff3d9122e133f7b8101c8fbdd00ed3d2ab8"
   integrity sha512-1uvKqKQta3KBxIz14F2v06AEHZ/dIoeKfbTRkK1E5oqjDnuEerLmYTgJB5AiQZHJcljpg1TuRzdjDR06qNk0DQ==
@@ -5263,6 +5263,11 @@ expo-font@~7.0.0:
   dependencies:
     fontfaceobserver "^2.1.0"
 
+expo-image-picker@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/expo-image-picker/-/expo-image-picker-8.0.1.tgz#bae9e0d89722de9a6e60e55f0e4291fc099abb14"
+  integrity sha512-f4KVQFZSgNiYlt8smZ9kc/gaHkJeFLhRYiSgQdOlmLOkCuX4jxtg++PjCZLSSVwMVv/DUHT0EvUzOZqJokZfdg==
+
 expo-keep-awake@~7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-7.0.0.tgz#131f56bc1ed8dd66e64a159afd7eaef26939d929"
@@ -5286,6 +5291,11 @@ expo-optimize@^0.0.3:
   integrity sha512-6j53vpA7jvHkwuO6zaDHIcRW7yCtHznhIXdZFHw/AIbrCQwMNBM8rnfqZvPKpAtqRC8kvfA74nxH5p07BUVNew==
   dependencies:
     "@expo/image-utils" "^0.2.9"
+
+expo-permissions@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-8.0.0.tgz#5a45e8451dd7ff37c9e6ce5e2447818372547813"
+  integrity sha512-GHTRmwh1rd1b0FcibluPFu93NNQyl9b1anBBDVPmomoo9Prz7kDcO5p2hFqM99r896yvAUSe0fPloPKUq4g/1A==
 
 expo-permissions@~7.0.0:
   version "7.0.0"
