@@ -10,9 +10,12 @@ export default function MyAccount() {
   const [login, setLogin] = useState(false);
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      return !user ? setLogin(false) : setLogin(true);
-    });
+    const isLogged = async () => {
+      await firebase.auth().onAuthStateChanged(user => {
+        return !user ? setLogin(false) : setLogin(true);
+      });
+    };
+    isLogged();
   }, []);
 
   const logout = () => {
