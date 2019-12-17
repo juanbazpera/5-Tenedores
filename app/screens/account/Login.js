@@ -2,7 +2,6 @@
 import React, { useRef } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Image, Divider } from 'react-native-elements';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-easy-toast';
 import { withNavigation } from 'react-navigation';
 import PropTypes from 'prop-types';
@@ -18,7 +17,7 @@ function Login(props) {
   const { navigation } = props;
 
   return (
-    <KeyboardAwareScrollView contentContainerStyle={styles.viewContainer} enableOnAndroid>
+    <View style={styles.viewContainer}>
       <View style={styles.imageContainer}>
         <Image source={LogoImage} style={styles.logo} resizeMode="contain" />
       </View>
@@ -26,8 +25,8 @@ function Login(props) {
       <CreateAccount navigation={navigation} />
       <Divider style={styles.divider} />
       <LoginFacebook toastRef={toastRef} navigation={navigation} />
-      <Toast ref={toastRef} position="bottom" positionValue={250} opacity={0.8} />
-    </KeyboardAwareScrollView>
+      <Toast ref={toastRef} position="bottom" positionValue={150} opacity={0.8} />
+    </View>
   );
 }
 
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
   viewContainer: {
     flex: 1,
     backgroundColor: '#fff',
-    marginLeft: 20,
+    marginLeft: 10,
     marginRight: 10,
   },
   imageContainer: {
@@ -75,7 +74,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   registerText: {
-    marginTop: 15,
     marginLeft: 10,
     marginRight: 10,
   },

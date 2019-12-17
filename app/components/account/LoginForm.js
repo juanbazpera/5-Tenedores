@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Input, Icon, Button } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import PropTypes from 'prop-types';
 import * as firebase from 'firebase';
 
@@ -38,42 +39,44 @@ const LoginForm = props => {
   };
 
   return (
-    <View style={styles.container}>
-      <Input
-        placeholder="Email"
-        containerStyle={styles.inputForm}
-        onChange={e => {
-          setEmail(e.nativeEvent.text);
-        }}
-        rightIcon={<Icon type="material-community" name="at" iconStyle={styles.iconRight} />}
-      />
-      <Input
-        placeholder="Contraseña"
-        password
-        secureTextEntry={hidePassword}
-        containerStyle={styles.inputForm}
-        onChange={e => {
-          setPassword(e.nativeEvent.text);
-        }}
-        rightIcon={
-          <Icon
-            type="material-community"
-            name={hidePassword ? 'eye-outline' : 'eye-off-outline'}
-            iconStyle={styles.iconRight}
-            onPress={() => {
-              setHidePassword(!hidePassword);
-            }}
-          />
-        }
-      />
-      <Button
-        title="Iniciar sesion"
-        buttonStyle={styles.loginBtn}
-        containerStyle={styles.containerLoginBtn}
-        onPress={() => login()}
-      />
-      <Loading text="Iniciando sesión" isVisible={isVisibleLoading} />
-    </View>
+    <KeyboardAwareScrollView enableOnAndroid>
+      <View style={styles.container}>
+        <Input
+          placeholder="Email"
+          containerStyle={styles.inputForm}
+          onChange={e => {
+            setEmail(e.nativeEvent.text);
+          }}
+          rightIcon={<Icon type="material-community" name="at" iconStyle={styles.iconRight} />}
+        />
+        <Input
+          placeholder="Contraseña"
+          password
+          secureTextEntry={hidePassword}
+          containerStyle={styles.inputForm}
+          onChange={e => {
+            setPassword(e.nativeEvent.text);
+          }}
+          rightIcon={
+            <Icon
+              type="material-community"
+              name={hidePassword ? 'eye-outline' : 'eye-off-outline'}
+              iconStyle={styles.iconRight}
+              onPress={() => {
+                setHidePassword(!hidePassword);
+              }}
+            />
+          }
+        />
+        <Button
+          title="Iniciar sesion"
+          buttonStyle={styles.loginBtn}
+          containerStyle={styles.containerLoginBtn}
+          onPress={() => login()}
+        />
+        <Loading text="Iniciando sesión" isVisible={isVisibleLoading} />
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -91,7 +94,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   inputForm: {
-    width: '100%',
+    width: '95%',
     marginTop: 20,
   },
   iconRight: { color: '#c1c1c1' },

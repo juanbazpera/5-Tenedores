@@ -13,13 +13,13 @@ function Register() {
   const toastRef = useRef();
 
   return (
-    <KeyboardAwareScrollView contentContainerStyle={styles.viewBody} enableOnAndroid>
+    <View style={styles.viewBody}>
       <View style={styles.imageViewStyle}>
         <Image source={LogoImage} style={styles.logo} PlaceholderContent={<ActivityIndicator />} resizeMode="contain" />
       </View>
       <RegisterForm toastRef={toastRef} />
       <Toast ref={toastRef} position="bottom" positionValue={150} opacity={0.8} />
-    </KeyboardAwareScrollView>
+    </View>
   );
 }
 

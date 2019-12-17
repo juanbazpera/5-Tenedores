@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Input, Icon, Button } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import PropTypes from 'prop-types';
 import * as firebase from 'firebase';
 
@@ -43,53 +44,55 @@ const RegisterForm = props => {
   };
 
   return (
-    <View style={styles.container}>
-      <Input
-        placeholder="Correo electronico"
-        containerStyle={styles.inputForm}
-        onChange={e => {
-          setEmail(e.nativeEvent.text);
-        }}
-        rightIcon={<Icon type="material-community" name="at" iconStyle={styles.iconRight} />}
-      />
-      <Input
-        placeholder="Contraseña"
-        password
-        secureTextEntry={hidePassword}
-        containerStyle={styles.inputForm}
-        onChange={e => setPassword(e.nativeEvent.text)}
-        rightIcon={
-          <Icon
-            type="material-community"
-            name={hidePassword ? 'eye-outline' : 'eye-off-outline'}
-            iconStyle={styles.iconRight}
-            onPress={() => setHidePassword(!hidePassword)}
-          />
-        }
-      />
-      <Input
-        placeholder="Repetir contraseña"
-        password
-        secureTextEntry={hidePasswordConfirm}
-        containerStyle={styles.inputForm}
-        onChange={e => setPasswordConfirmation(e.nativeEvent.text)}
-        rightIcon={
-          <Icon
-            type="material-community"
-            name={hidePasswordConfirm ? 'eye-outline' : 'eye-off-outline'}
-            iconStyle={styles.iconRight}
-            onPress={() => setHidePasswordConfirm(!hidePasswordConfirm)}
-          />
-        }
-      />
-      <Button
-        buttonStyle={styles.registerBtn}
-        containerStyle={styles.registerContainerBtn}
-        title="Registrarse"
-        onPress={() => register()}
-      />
-      <Loading text="Creando cuenta" isVisible={isVisibleLoading} />
-    </View>
+    <KeyboardAwareScrollView enableOnAndroid>
+      <View style={styles.container}>
+        <Input
+          placeholder="Correo electronico"
+          containerStyle={styles.inputForm}
+          onChange={e => {
+            setEmail(e.nativeEvent.text);
+          }}
+          rightIcon={<Icon type="material-community" name="at" iconStyle={styles.iconRight} />}
+        />
+        <Input
+          placeholder="Contraseña"
+          password
+          secureTextEntry={hidePassword}
+          containerStyle={styles.inputForm}
+          onChange={e => setPassword(e.nativeEvent.text)}
+          rightIcon={
+            <Icon
+              type="material-community"
+              name={hidePassword ? 'eye-outline' : 'eye-off-outline'}
+              iconStyle={styles.iconRight}
+              onPress={() => setHidePassword(!hidePassword)}
+            />
+          }
+        />
+        <Input
+          placeholder="Repetir contraseña"
+          password
+          secureTextEntry={hidePasswordConfirm}
+          containerStyle={styles.inputForm}
+          onChange={e => setPasswordConfirmation(e.nativeEvent.text)}
+          rightIcon={
+            <Icon
+              type="material-community"
+              name={hidePasswordConfirm ? 'eye-outline' : 'eye-off-outline'}
+              iconStyle={styles.iconRight}
+              onPress={() => setHidePasswordConfirm(!hidePasswordConfirm)}
+            />
+          }
+        />
+        <Button
+          buttonStyle={styles.registerBtn}
+          containerStyle={styles.registerContainerBtn}
+          title="Registrarse"
+          onPress={() => register()}
+        />
+        <Loading text="Creando cuenta" isVisible={isVisibleLoading} />
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 
