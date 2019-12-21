@@ -34,14 +34,23 @@ export default function UserLogged() {
         setIsLoading={setIsLoading}
         setTextLoading={setTextLoading}
       />
-      <AccountOptions />
+      <AccountOptions
+        userInfo={userInfo}
+        setReloadData={setReloadData}
+        toastRef={toastRef}
+      />
       <Button
         title="Cerrar sesion"
         buttonStyle={styles.closeSessionBtn}
         titleStyle={styles.closeSessionTextBtn}
         onPress={() => firebase.auth().signOut()}
       />
-      <Toast ref={toastRef} position="bottom" positionValue={150} opacity={0.8} />
+      <Toast
+        ref={toastRef}
+        position="bottom"
+        positionValue={150}
+        opacity={0.8}
+      />
       <Loading text={textLoading} isVisible={isLoading} />
     </View>
   );
