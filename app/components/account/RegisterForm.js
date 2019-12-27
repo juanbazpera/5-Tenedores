@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import * as firebase from 'firebase';
 
 import Loading from '../Loading';
-import validateEmail from '../../utils/Validation';
+import { validateEmail } from '../../utils/Validation';
 
 // create a component
 const RegisterForm = props => {
@@ -97,7 +97,9 @@ const RegisterForm = props => {
 };
 
 RegisterForm.propTypes = {
-  toastRef: PropTypes.shape({ current: PropTypes.shape({ show: PropTypes.func }) }).isRequired,
+  toastRef: PropTypes.shape({
+    current: PropTypes.shape({ show: PropTypes.func }),
+  }).isRequired,
   navigation: PropTypes.shape({ navigate: PropTypes.func }).isRequired,
 };
 

@@ -6,7 +6,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import PropTypes from 'prop-types';
 import * as firebase from 'firebase';
 
-import validateEmail from '../../utils/Validation';
+import { validateEmail } from '../../utils/Validation';
 import Loading from '../Loading';
 
 const LoginForm = props => {
@@ -15,14 +15,15 @@ const LoginForm = props => {
   const [hidePassword, setHidePassword] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isVisibleLoading, setIsVisibleLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const login = async () => {
-    setIsVisibleLoading(true);
+    setIsLoading(true);
     if (!email || !password) {
-      toastRef.current.show('Inserte email y contraseña');
+      setErrorMessage('Inserte email y contraseña');
     } else if (!validateEmail(email)) {
-      toastRef.current.show('Email invalido');
+      setErrorMessage('Email invalido');
     } else {
       await firebase
         .auth()
@@ -31,11 +32,12 @@ const LoginForm = props => {
           toastRef.current.show('Login correcto');
           navigation.navigate('MyAccount');
         })
-        .catch(() => {
-          toastRef.current.show('Email o Contraseña invalido');
+        .catch(error => {
+          console.log(error);
+          setErrorMessage('Email o Contraseña invalido');
         });
     }
-    setIsVisibleLoading(false);
+    setIsLoading(false);
   };
 
   return (
@@ -47,7 +49,13 @@ const LoginForm = props => {
           onChange={e => {
             setEmail(e.nativeEvent.text);
           }}
-          rightIcon={<Icon type="material-community" name="at" iconStyle={styles.iconRight} />}
+          rightIcon={
+            <Icon
+              type="material-community"
+              name="at"
+              iconStyle={styles.iconRight}
+            />
+          }
         />
         <Input
           placeholder="Contraseña"
@@ -67,6 +75,7 @@ const LoginForm = props => {
               }}
             />
           }
+          errorMessage={errorMessage}
         />
         <Button
           title="Iniciar sesion"
@@ -74,15 +83,18 @@ const LoginForm = props => {
           containerStyle={styles.containerLoginBtn}
           onPress={() => login()}
         />
-        <Loading text="Iniciando sesión" isVisible={isVisibleLoading} />
       </View>
+      <Loading isVisible={isLoading} text="Iniciando session" />
     </KeyboardAwareScrollView>
   );
 };
 
 LoginForm.propTypes = {
-  toastRef: PropTypes.shape({ current: PropTypes.shape({ show: PropTypes.func }) }).isRequired,
-  navigation: PropTypes.shape({ navigate: PropTypes.func }).isRequired,
+  toastRef: PropTypes.shape({
+    current: PropTypes.shape({ show: PropTypes.func }),
+  }).isRequired,
+  navigation: PropTypes.shape({ navigate: PropTypes.func })
+    .isRequired,
 };
 
 // define your styles
