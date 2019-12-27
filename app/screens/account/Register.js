@@ -1,7 +1,6 @@
 // import liraries
 import React, { useRef } from 'react';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-easy-toast';
 import { withNavigation } from 'react-navigation';
 import { Image } from 'react-native-elements';
@@ -15,7 +14,12 @@ function Register() {
   return (
     <View style={styles.viewBody}>
       <View style={styles.imageViewStyle}>
-        <Image source={LogoImage} style={styles.logo} PlaceholderContent={<ActivityIndicator />} resizeMode="contain" />
+        <Image
+          source={LogoImage}
+          style={styles.logo}
+          PlaceholderContent={<ActivityIndicator />}
+          resizeMode="contain"
+        />
       </View>
       <RegisterForm toastRef={toastRef} />
       <Toast ref={toastRef} position="bottom" positionValue={150} opacity={0.8} />
