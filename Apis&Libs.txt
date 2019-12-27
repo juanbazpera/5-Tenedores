@@ -9,8 +9,10 @@
     Example in 5-tenedores
     Rule to use JSX in JS "rules": { "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }], }
 
--- Formularios: tcomb-form-native https://github.com/gcanti/tcomb-form-native
+-- Formularios: tcomb-form-native https://github.com/gcanti/tcomb-form-native (No se usa mas)
 -- Toast: react-native-easy-Toast
 -- Mover screen al aparecer teclado: react-native-keyboard-aware-scroll-view setear flag enabledAndroid
 
 -- Desencriptar token de google auth en jwt.io
+
+-- Botton para agregar: react-native-action-button
