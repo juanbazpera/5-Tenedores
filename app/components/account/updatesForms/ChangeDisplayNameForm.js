@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import * as firebase from 'firebase';
+import PropTypes from 'prop-types';
 
 // create a component
 const ChangeDisplayNameForm = props => {
@@ -14,8 +15,11 @@ const ChangeDisplayNameForm = props => {
   } = props;
 
   const [newDisplayName, setNewDisplayName] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const updateDisplayName = async () => {
+    setIsLoading(true);
     await firebase
       .auth()
       .currentUser.updateProfile({ displayName: newDisplayName })
@@ -28,10 +32,9 @@ const ChangeDisplayNameForm = props => {
       })
       .catch(() => {
         setIsVisibleModal(false);
-        toastRef.current.show(
-          'No se pudo cambiar, intentelo mas tarde',
-        );
+        setErrorMessage('No se pudo cambiar, intentelo mas tarde');
       });
+    setIsLoading(false);
   };
 
   return (
@@ -46,14 +49,14 @@ const ChangeDisplayNameForm = props => {
           name: 'account-circle-outline',
           color: '#c2c2c2',
         }}
-        // errorMessage()
+        errorMessage={errorMessage}
       />
       <Button
         containerStyle={styles.saveBtnContainer}
         buttonStyle={styles.saveBtn}
         title="Guardar"
         onPress={updateDisplayName}
-        // loading={}
+        loading={isLoading}
       />
     </View>
   );
@@ -72,11 +75,23 @@ const styles = StyleSheet.create({
   },
   saveBtnContainer: {
     marginTop: 20,
+    width: '100%',
   },
   saveBtn: {
     backgroundColor: '#00a680',
   },
 });
+
+ChangeDisplayNameForm.propTypes = {
+  displayName: PropTypes.string.isRequired,
+  setIsVisibleModal: PropTypes.func.isRequired,
+  setReloadData: PropTypes.func.isRequired,
+  toastRef: PropTypes.shape({
+    current: PropTypes.shape({
+      show: PropTypes.func,
+    }),
+  }).isRequired,
+};
 
 // make this component available to the app
 export default ChangeDisplayNameForm;

@@ -1,7 +1,8 @@
 // import liraries
 import React, { useState } from 'react';
 import { ListItem } from 'react-native-elements';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 
 import Modal from '../Modal';
 import ChangeDisplayNameForm from './updatesForms/ChangeDisplayNameForm';
@@ -16,6 +17,7 @@ const AccountOptions = props => {
 
   const menuOptions = [
     {
+      key: 'displayName',
       title: 'Cambiar nombre',
       iconTypes: 'material-commuinity',
       iconNameLeft: 'account-circle',
@@ -27,6 +29,7 @@ const AccountOptions = props => {
       },
     },
     {
+      key: 'email',
       title: 'Cambiar email',
       iconTypes: 'material-commuinity',
       iconNameLeft: 'email',
@@ -38,6 +41,7 @@ const AccountOptions = props => {
       },
     },
     {
+      key: 'password',
       title: 'Cambiar contraseña',
       iconTypes: 'material-commuinity',
       iconNameLeft: 'lock',
@@ -68,12 +72,20 @@ const AccountOptions = props => {
           <ChangeEmailForm
             email={userInfo.email}
             setIsVisibleModal={setIsVisibleModal}
+            setReloadData={setReloadData}
             toastRef={toastRef}
           />,
         );
         break;
       case 'password':
-        setRenderComponent(<ChangePasswordForm />);
+        setRenderComponent(
+          <ChangePasswordForm
+            email={userInfo.email}
+            setIsVisibleModal={setIsVisibleModal}
+            setReloadData={setReloadData}
+            toastRef={toastRef}
+          />,
+        );
         break;
       default:
         break;
@@ -83,9 +95,9 @@ const AccountOptions = props => {
 
   return (
     <View>
-      {menuOptions.map((menu, index) => (
+      {menuOptions.map(menu => (
         <ListItem
-          key={index}
+          key={menu.key}
           title={menu.title}
           leftIcon={{
             type: menu.iconTypes,
@@ -120,6 +132,19 @@ const styles = StyleSheet.create({
     borderBottomColor: '#e3e3e3',
   },
 });
+
+AccountOptions.propTypes = {
+  userInfo: PropTypes.shape({
+    displayName: PropTypes.string,
+    email: PropTypes.string,
+  }).isRequired,
+  setReloadData: PropTypes.func.isRequired,
+  toastRef: PropTypes.shape({
+    current: PropTypes.shape({
+      show: PropTypes.func,
+    }),
+  }).isRequired,
+};
 
 // make this component available to the app
 export default AccountOptions;

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { createAppContainer } from 'react-navigation';
 
@@ -16,12 +17,7 @@ const RootStack = createBottomTabNavigator(
       navigationOptions: () => ({
         tabBarLabel: 'Restaurantes',
         tabBarIcon: ({ tintColor }) => (
-          <Icon
-            name="compass-outline"
-            type="material-community"
-            size={22}
-            color={tintColor}
-          />
+          <Icon name="compass-outline" type="material-community" size={22} color={tintColor} />
         ),
       }),
     },
@@ -30,12 +26,7 @@ const RootStack = createBottomTabNavigator(
       navigationOptions: () => ({
         tabBarLabel: 'Ranking',
         tabBarIcon: ({ tintColor }) => (
-          <Icon
-            name="star-outline"
-            type="material-community"
-            size={22}
-            color={tintColor}
-          />
+          <Icon name="star-outline" type="material-community" size={22} color={tintColor} />
         ),
       }),
     },
@@ -44,12 +35,7 @@ const RootStack = createBottomTabNavigator(
       navigationOptions: () => ({
         tabBarLabel: 'Buscar',
         tabBarIcon: ({ tintColor }) => (
-          <Icon
-            name="magnify"
-            type="material-community"
-            size={22}
-            color={tintColor}
-          />
+          <Icon name="magnify" type="material-community" size={22} color={tintColor} />
         ),
       }),
     },
@@ -58,12 +44,7 @@ const RootStack = createBottomTabNavigator(
       navigationOptions: () => ({
         tabBarLabel: 'Cuenta',
         tabBarIcon: ({ tintColor }) => (
-          <Icon
-            name="account-outline"
-            type="material-community"
-            size={22}
-            color={tintColor}
-          />
+          <Icon name="account-outline" type="material-community" size={22} color={tintColor} />
         ),
       }),
     },
@@ -71,7 +52,7 @@ const RootStack = createBottomTabNavigator(
   {
     // Si initialRouteName y Order no estan definidas toma el orden
     // que se declararon anteriormente
-    initialRouteName: 'Account',
+    initialRouteName: 'Restaurants',
     order: ['Restaurants', 'TopRestaurants', 'Search', 'Account'],
     tabBarOptions: {
       inactiveTintColor: '#646464',

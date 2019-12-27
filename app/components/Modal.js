@@ -2,6 +2,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Overlay } from 'react-native-elements';
+import PropTypes from 'prop-types';
 
 // create a component
 const Modal = props => {
@@ -30,6 +31,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
+
+Modal.propTypes = {
+  isVisible: PropTypes.bool.isRequired,
+  setIsVisible: PropTypes.func.isRequired,
+  children: PropTypes.func.isRequired,
+};
 
 // make this component available to the app
 export default Modal;
