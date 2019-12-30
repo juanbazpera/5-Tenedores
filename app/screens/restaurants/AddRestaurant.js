@@ -1,11 +1,19 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import Toast from 'react-native-easy-toast';
+import Loading from '../../components/Loading';
+import AddRestaurantForm from '../../components/restaurants/AddRestaurantForm';
 
 // create a component
-const AddRestaurant = () => {
+const AddRestaurant = props => {
+  const { navigation } = props;
+  const toastRef = useRef();
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <View style={styles.container}>
-      <Text>AddRestaurant</Text>
+      <AddRestaurantForm navigation={navigation} toastRef={toastRef} setIsLoading={setIsLoading} />
+      <Loading isVisible={isLoading} text="Creando restaurante" />
+      <Toast ref={toastRef} position="bottom" positionValue={150} opacity={0.8} />
     </View>
   );
 };
@@ -14,9 +22,6 @@ const AddRestaurant = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#2c3e50',
   },
 });
 

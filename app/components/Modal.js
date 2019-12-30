@@ -35,7 +35,10 @@ const styles = StyleSheet.create({
 Modal.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   setIsVisible: PropTypes.func.isRequired,
-  children: PropTypes.func.isRequired,
+  children: PropTypes.func,
+};
+Modal.defaultProps = {
+  children: () => {},
 };
 
 // make this component available to the app
