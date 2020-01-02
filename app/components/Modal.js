@@ -28,17 +28,16 @@ const styles = StyleSheet.create({
   overlayContainer: {
     height: 'auto',
     width: '90%',
-    backgroundColor: '#fff',
-  },
+    backgroundColor: '#fff'
+  }
 });
 
 Modal.propTypes = {
   isVisible: PropTypes.bool.isRequired,
-  setIsVisible: PropTypes.func.isRequired,
-  children: PropTypes.func,
+  setIsVisible: PropTypes.func.isRequired
 };
 Modal.defaultProps = {
-  children: () => {},
+  children: null
 };
 
 // make this component available to the app

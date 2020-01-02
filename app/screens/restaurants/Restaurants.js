@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import ActionButton from 'react-native-action-button';
-import * as firebase from 'firebase';
 import PropTypes from 'prop-types';
+
+import { firebase } from '../../utils/FireBase';
 
 const AddRestaurantButton = props => {
   const { navigation } = props;
@@ -39,18 +40,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
+    justifyContent: 'center'
+  }
 });
 
 Restaurants.propTypes = {
   navigation: PropTypes.shape({
-    navigate: PropTypes.func,
-  }).isRequired,
+    navigate: PropTypes.func
+  }).isRequired
 };
 
 AddRestaurantButton.propTypes = {
   navigation: PropTypes.shape({
-    navigate: PropTypes.func,
-  }).isRequired,
+    navigate: PropTypes.func
+  }).isRequired
 };
