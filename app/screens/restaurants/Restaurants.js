@@ -4,15 +4,12 @@ import { View, Text, StyleSheet } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import PropTypes from 'prop-types';
 
-import { firebase } from '../../utils/FireBase';
+import firebase from '../../utils/FireBase';
 
 const AddRestaurantButton = props => {
   const { navigation } = props;
   return (
-    <ActionButton
-      buttonColor="#00a680"
-      onPress={() => navigation.navigate('AddRestaurant')}
-    />
+    <ActionButton buttonColor="#00a680" onPress={() => navigation.navigate('AddRestaurant')} />
   );
 };
 
@@ -40,18 +37,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });
 
 Restaurants.propTypes = {
   navigation: PropTypes.shape({
-    navigate: PropTypes.func
-  }).isRequired
+    navigate: PropTypes.func,
+  }).isRequired,
 };
 
 AddRestaurantButton.propTypes = {
   navigation: PropTypes.shape({
-    navigate: PropTypes.func
-  }).isRequired
+    navigate: PropTypes.func,
+  }).isRequired,
 };
