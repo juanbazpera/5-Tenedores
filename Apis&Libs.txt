@@ -16,3 +16,10 @@
 -- Desencriptar token de google auth en jwt.io
 
 -- Botton para agregar: react-native-action-button
+-- MapView: 'react-native-maps' para renderizar un mapa
+-- Location from 'expo-location' para obtener la location del telefono
+-- PropTypes from 'prop-types' propiedades requeridas en componentes
+-- Permissions from 'expo-permissions' permisos para solicitar, 'galeria' 'gps' 'camara' etc.
+-- ImagePicker from 'expo-image-picker' para elegir una imagen de la galeria
+
+-- uuid para crear id's dinamicos.
