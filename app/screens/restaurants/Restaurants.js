@@ -64,9 +64,39 @@ export default function Restaurants(props) {
     getRestaurants();
   }, []);
 
+  const handleLoadMore = async () => {
+    const resultRestaurants = [];
+    restaurants.length < totalRestaurants && setIsLoading(true);
+
+    const restaurantsDb = db
+      .collection('restaurants')
+      .orderBy('createAt', 'desc')
+      .startAfter(startRestaurants.data().createAt)
+      .limit(limitRestaurants);
+
+    await restaurantsDb.get().then(response => {
+      if (response.docs.length > 0) {
+        setStartRestaurants(response.docs[response.docs.length - 1]);
+      } else {
+        setIsLoading(false);
+      }
+
+      response.forEach(doc => {
+        let restaurant = doc.data();
+        restaurant.id = doc.id;
+        resultRestaurants.push({ restaurant });
+      });
+      setRestaurants([...restaurants, ...resultRestaurants]);
+    });
+  };
+
   return (
     <View style={styles.viewBody}>
-      <ListRestaurants restaurants={restaurants} isLoading={isLoading} />
+      <ListRestaurants
+        restaurants={restaurants}
+        isLoading={isLoading}
+        handleLoadMore={handleLoadMore}
+      />
       {user && <AddRestaurantButton navigation={navigation} />}
     </View>
   );
