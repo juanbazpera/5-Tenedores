@@ -11,6 +11,7 @@ web-build/
 web-report/
 app/utils/FireBase.js
 app/utils/Social.js
+app/utils/RestaurantsFromApi.js
 
 # macOS
 .DS_Store

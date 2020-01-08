@@ -29,41 +29,44 @@ const AddRestaurantForm = props => {
   const addRestaurant = () => {
     if (!restaurantAddress || !restaurantDescription || !restaurantName) {
       toastRef.current.show('Todos los campos del formulario son obligatorios');
-    } else if (imagesSelected.length == 0) {
+    } else if (imagesSelected.length === 0) {
       toastRef.current.show('El restaurante debe tener una foto');
     } else if (!locationRestaurant) {
       toastRef.current.show('Debe localizar el restaurante en el mapa');
     } else {
       setIsLoading(true);
-      uploadImageStorage(imagesSelected).then(arrayImages => {
-        db.collection('restaurants')
-          .add({
-            name: restaurantName,
-            address: restaurantAddress,
-            description: restaurantDescription,
-            location: locationRestaurant,
-            images: arrayImages,
-            rating: 0,
-            ratingTotal: 0,
-            quantityVoting: 0,
-            createAt: new Date(),
-            createBy: firebase.auth().currentUser.uid,
-          })
-          .then(success => {
-            console.log(success);
-            setIsLoading(false);
-            navigation.navigate('Restaurants');
-          })
-          .catch(error => {
-            console.log(error);
-            setIsLoading(false);
-            toastRef.current.show('Error al crear el restaurante');
+      // uploadImageStorage(imagesSelected).then(images => {
+      db.collection('restaurants')
+        .add({
+          name: restaurantName,
+          address: restaurantAddress,
+          description: restaurantDescription,
+          location: locationRestaurant,
+          images: [],
+          rating: 0,
+          ratingTotal: 0,
+          quantityVoting: 0,
+          createAt: new Date(),
+          createBy: firebase.auth().currentUser.uid,
+        })
+        .then(success => {
+          uploadImageStorage(success.id, imagesSelected).then(imagesArray => {
+            success.update({ images: imagesArray });
           });
-      });
+          console.log(success);
+          setIsLoading(false);
+          navigation.navigate('Restaurants');
+        })
+        .catch(error => {
+          console.log(error);
+          setIsLoading(false);
+          toastRef.current.show('Error al crear el restaurante');
+        });
+      // });
     }
   };
 
-  const uploadImageStorage = async imageArray => {
+  const uploadImageStorage = async (id, imageArray) => {
     const imagesBlob = [];
     await Promise.all(
       imageArray.map(async image => {
@@ -71,7 +74,7 @@ const AddRestaurantForm = props => {
         const blob = await response.blob();
         const ref = firebase
           .storage()
-          .ref('restaurants-images')
+          .ref(`restaurants-images/${id}`)
           .child(uuid());
         await ref.put(blob).then(result => {
           imagesBlob.push(result.metadata.name);
