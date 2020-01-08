@@ -18,6 +18,7 @@ export default function Restaurants(props) {
   const [startRestaurants, setStartRestaurants] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [totalRestaurants, setTotalRestaurants] = useState(0);
+  const [isReloadRestaurants, setIsReloadRestaurants] = useState(false);
   const limitRestaurants = 8;
 
   useEffect(() => {
@@ -27,7 +28,7 @@ export default function Restaurants(props) {
   }, []);
 
   useEffect(() => {
-    console.log('Is loading: ', isLoading);
+    console.log('Cargando restaurante');
     db.collection('restaurants')
       .get()
       .then(snap => {
@@ -62,11 +63,12 @@ export default function Restaurants(props) {
     };
 
     getRestaurants();
-  }, []);
+    setIsReloadRestaurants(false);
+  }, [isReloadRestaurants]);
 
   const handleLoadMore = async () => {
     const resultRestaurants = [];
-    restaurants.length < totalRestaurants && setIsLoading(true);
+    if (restaurants.length < totalRestaurants) setIsLoading(true);
 
     const restaurantsDb = db
       .collection('restaurants')
@@ -97,15 +99,23 @@ export default function Restaurants(props) {
         isLoading={isLoading}
         handleLoadMore={handleLoadMore}
       />
-      {user && <AddRestaurantButton navigation={navigation} />}
+      {user && (
+        <AddRestaurantButton
+          navigation={navigation}
+          setIsReloadRestaurants={setIsReloadRestaurants}
+        />
+      )}
     </View>
   );
 }
 
 const AddRestaurantButton = props => {
-  const { navigation } = props;
+  const { navigation, setIsReloadRestaurants } = props;
   return (
-    <ActionButton buttonColor="#00a680" onPress={() => navigation.navigate('AddRestaurant')} />
+    <ActionButton
+      buttonColor="#00a680"
+      onPress={() => navigation.navigate('AddRestaurant', { setIsReloadRestaurants })}
+    />
   );
 };
 

@@ -24,7 +24,7 @@ const ListRestaurants = props => {
           renderItem={restaurant => <Restaurant restaurant={restaurant} />}
           keyExtractor={(item, index) => index.toString()}
           onEndReached={handleLoadMore}
-          onEndReachedThreshold={0}
+          onEndReachedThreshold={2}
           ListFooterComponent={<FooterList isLoading={isLoading} />}
         />
       ) : (
@@ -41,7 +41,6 @@ const Restaurant = props => {
   const { restaurant } = props;
   const { name, address, description, images, id } = restaurant.item.restaurant;
   const [imageRestaurant, setImageRestaurant] = useState(null);
-  console.log(restaurant);
   useEffect(() => {
     const image = images[0];
     firebase

@@ -33,7 +33,6 @@ const LoginForm = props => {
           navigation.navigate('MyAccount');
         })
         .catch(error => {
-          console.log(error);
           setErrorMessage('Email o Contraseña invalido');
         });
     }
@@ -49,13 +48,7 @@ const LoginForm = props => {
           onChange={e => {
             setEmail(e.nativeEvent.text);
           }}
-          rightIcon={
-            <Icon
-              type="material-community"
-              name="at"
-              iconStyle={styles.iconRight}
-            />
-          }
+          rightIcon={<Icon type="material-community" name="at" iconStyle={styles.iconRight} />}
         />
         <Input
           placeholder="Contraseña"
@@ -93,8 +86,7 @@ LoginForm.propTypes = {
   toastRef: PropTypes.shape({
     current: PropTypes.shape({ show: PropTypes.func }),
   }).isRequired,
-  navigation: PropTypes.shape({ navigate: PropTypes.func })
-    .isRequired,
+  navigation: PropTypes.shape({ navigate: PropTypes.func }).isRequired,
 };
 
 // define your styles

@@ -18,7 +18,7 @@ import Modal from '../Modal';
 const noImage = require('../../../assets/img/no-image.png');
 // create a component
 const AddRestaurantForm = props => {
-  const { navigation, toastRef, setIsLoading } = props;
+  const { navigation, toastRef, setIsLoading, setIsReloadRestaurants } = props;
   const [imagesSelected, setImagesSelected] = useState([]);
   const [restaurantName, setRestaurantName] = useState('');
   const [restaurantAddress, setRestaurantAddress] = useState('');
@@ -53,12 +53,11 @@ const AddRestaurantForm = props => {
           uploadImageStorage(success.id, imagesSelected).then(imagesArray => {
             success.update({ images: imagesArray });
           });
-          console.log(success);
           setIsLoading(false);
+          setIsReloadRestaurants(true);
           navigation.navigate('Restaurants');
         })
         .catch(error => {
-          console.log(error);
           setIsLoading(false);
           toastRef.current.show('Error al crear el restaurante');
         });
