@@ -28,7 +28,6 @@ export default function Restaurants(props) {
   }, []);
 
   useEffect(() => {
-    console.log('Cargando restaurante');
     db.collection('restaurants')
       .get()
       .then(snap => {

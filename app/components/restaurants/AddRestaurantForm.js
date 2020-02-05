@@ -35,7 +35,6 @@ const AddRestaurantForm = props => {
       toastRef.current.show('Debe localizar el restaurante en el mapa');
     } else {
       setIsLoading(true);
-      // uploadImageStorage(imagesSelected).then(images => {
       db.collection('restaurants')
         .add({
           name: restaurantName,
@@ -50,7 +49,7 @@ const AddRestaurantForm = props => {
           createBy: firebase.auth().currentUser.uid,
         })
         .then(success => {
-          uploadImageStorage(success.id, imagesSelected).then(imagesArray => {
+          uploadImageStorage(imagesSelected).then(imagesArray => {
             success.update({ images: imagesArray });
           });
           setIsLoading(false);
@@ -65,7 +64,7 @@ const AddRestaurantForm = props => {
     }
   };
 
-  const uploadImageStorage = async (id, imageArray) => {
+  const uploadImageStorage = async (imageArray) => {
     const imagesBlob = [];
     await Promise.all(
       imageArray.map(async image => {
@@ -73,7 +72,7 @@ const AddRestaurantForm = props => {
         const blob = await response.blob();
         const ref = firebase
           .storage()
-          .ref(`restaurants-images/${id}`)
+          .ref(`restaurants-images/`)
           .child(uuid());
         await ref.put(blob).then(result => {
           imagesBlob.push(result.metadata.name);

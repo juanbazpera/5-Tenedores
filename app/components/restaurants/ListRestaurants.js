@@ -39,13 +39,13 @@ const ListRestaurants = props => {
 
 const Restaurant = props => {
   const { restaurant } = props;
-  const { name, address, description, images, id } = restaurant.item.restaurant;
+  const { name, address, description, images} = restaurant.item.restaurant;
   const [imageRestaurant, setImageRestaurant] = useState(null);
   useEffect(() => {
     const image = images[0];
     firebase
       .storage()
-      .ref(`restaurants-images/${id}/${image}`)
+      .ref(`restaurants-images/${image}`)
       .getDownloadURL()
       .then(result => {
         setImageRestaurant(result);
