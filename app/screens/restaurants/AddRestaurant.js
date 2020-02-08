@@ -19,7 +19,12 @@ const AddRestaurant = props => {
         setIsReloadRestaurants={setIsReloadRestaurants}
       />
       <Loading isVisible={isLoading} text="Creando restaurante" />
-      <Toast ref={toastRef} position="bottom" positionValue={150} opacity={0.8} />
+      <Toast
+        ref={toastRef}
+        position="bottom"
+        positionValue={150}
+        opacity={0.8}
+      />
     </View>
   );
 };
@@ -27,8 +32,8 @@ const AddRestaurant = props => {
 // define your styles
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
+    flex: 1
+  }
 });
 
 export default AddRestaurant;

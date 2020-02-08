@@ -4,7 +4,7 @@ import { Input, Icon, Button } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import PropTypes from 'prop-types';
-import * as firebase from 'firebase';
+import firebase from 'firebase/app';
 
 import { validateEmail } from '../../utils/Validation';
 import Loading from '../Loading';
@@ -48,7 +48,13 @@ const LoginForm = props => {
           onChange={e => {
             setEmail(e.nativeEvent.text);
           }}
-          rightIcon={<Icon type="material-community" name="at" iconStyle={styles.iconRight} />}
+          rightIcon={
+            <Icon
+              type="material-community"
+              name="at"
+              iconStyle={styles.iconRight}
+            />
+          }
         />
         <Input
           placeholder="Contraseña"
@@ -84,9 +90,9 @@ const LoginForm = props => {
 
 LoginForm.propTypes = {
   toastRef: PropTypes.shape({
-    current: PropTypes.shape({ show: PropTypes.func }),
+    current: PropTypes.shape({ show: PropTypes.func })
   }).isRequired,
-  navigation: PropTypes.shape({ navigate: PropTypes.func }).isRequired,
+  navigation: PropTypes.shape({ navigate: PropTypes.func }).isRequired
 };
 
 // define your styles
@@ -95,20 +101,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 30,
+    marginTop: 30
   },
   inputForm: {
     width: '95%',
-    marginTop: 20,
+    marginTop: 20
   },
   iconRight: { color: '#c1c1c1' },
   containerLoginBtn: {
     marginTop: 20,
-    width: '95%',
+    width: '95%'
   },
   loginBtn: {
-    backgroundColor: '#00a680',
-  },
+    backgroundColor: '#00a680'
+  }
 });
 
 export default withNavigation(LoginForm);

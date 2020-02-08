@@ -3,12 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import PropTypes from 'prop-types';
-
 import ListRestaurants from '../../components/restaurants/ListRestaurants';
 
-import firebase from '../../utils/FireBase';
+import { firebaseApp } from '../../utils/FireBase';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
-const db = firebase.firestore();
+const db = firebase.firestore(firebaseApp);
 
 // create a component
 export default function Restaurants(props) {
@@ -94,6 +95,7 @@ export default function Restaurants(props) {
   return (
     <View style={styles.viewBody}>
       <ListRestaurants
+        navigation={navigation}
         restaurants={restaurants}
         isLoading={isLoading}
         handleLoadMore={handleLoadMore}
@@ -113,25 +115,27 @@ const AddRestaurantButton = props => {
   return (
     <ActionButton
       buttonColor="#00a680"
-      onPress={() => navigation.navigate('AddRestaurant', { setIsReloadRestaurants })}
+      onPress={() =>
+        navigation.navigate('AddRestaurant', { setIsReloadRestaurants })
+      }
     />
   );
 };
 
 const styles = StyleSheet.create({
   viewBody: {
-    flex: 1,
-  },
+    flex: 1
+  }
 });
 
 Restaurants.propTypes = {
   navigation: PropTypes.shape({
-    navigate: PropTypes.func,
-  }).isRequired,
+    navigate: PropTypes.func
+  }).isRequired
 };
 
 AddRestaurantButton.propTypes = {
   navigation: PropTypes.shape({
-    navigate: PropTypes.func,
-  }).isRequired,
+    navigate: PropTypes.func
+  }).isRequired
 };

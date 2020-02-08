@@ -8,12 +8,13 @@ import PropTypes from 'prop-types';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import uuid from 'uuid/v4';
-
-import firebase from '../../utils/FireBase';
-
-const db = firebase.firestore();
+import firebase from 'firebase/app';
+import firebaseConfig from '../../utils/FireBase';
+import 'firebase/firestore';
 
 import Modal from '../Modal';
+
+const db = firebase.firestore(firebaseConfig);
 
 const noImage = require('../../../assets/img/no-image.png');
 // create a component
@@ -46,7 +47,7 @@ const AddRestaurantForm = props => {
           ratingTotal: 0,
           quantityVoting: 0,
           createAt: new Date(),
-          createBy: firebase.auth().currentUser.uid,
+          createBy: firebase.auth().currentUser.uid
         })
         .then(success => {
           uploadImageStorage(imagesSelected).then(imagesArray => {
@@ -64,7 +65,7 @@ const AddRestaurantForm = props => {
     }
   };
 
-  const uploadImageStorage = async (imageArray) => {
+  const uploadImageStorage = async imageArray => {
     const imagesBlob = [];
     await Promise.all(
       imageArray.map(async image => {
@@ -77,7 +78,7 @@ const AddRestaurantForm = props => {
         await ref.put(blob).then(result => {
           imagesBlob.push(result.metadata.name);
         });
-      }),
+      })
     );
     return imagesBlob;
   };
@@ -114,8 +115,8 @@ const AddRestaurantForm = props => {
 AddRestaurantForm.propTypes = {
   navigation: PropTypes.shape({ navigate: PropTypes.func }).isRequired,
   toastRef: PropTypes.shape({
-    current: PropTypes.shape({ show: PropTypes.func }),
-  }).isRequired,
+    current: PropTypes.shape({ show: PropTypes.func })
+  }).isRequired
 };
 
 const FormAdd = props => {
@@ -124,7 +125,7 @@ const FormAdd = props => {
     setRestaurantDescription,
     setRestaurantName,
     setIsVisibleMap,
-    locationRestaurant,
+    locationRestaurant
   } = props;
   return (
     <View style={styles.viewForm}>
@@ -140,7 +141,7 @@ const FormAdd = props => {
           type: 'material-community',
           name: 'google-maps',
           color: locationRestaurant ? '#00a680' : '#c2c2c2',
-          onPress: () => setIsVisibleMap(true),
+          onPress: () => setIsVisibleMap(true)
         }}
         onChange={e => setRestaurantAddress(e.nativeEvent.text)}
       />
@@ -160,10 +161,10 @@ FormAdd.propTypes = {
   setRestaurantAddress: PropTypes.func.isRequired,
   setRestaurantDescription: PropTypes.func.isRequired,
   setRestaurantName: PropTypes.func.isRequired,
-  setIsVisibleMap: PropTypes.func.isRequired,
+  setIsVisibleMap: PropTypes.func.isRequired
 };
 FormAdd.defaultProps = {
-  locationRestaurant: null,
+  locationRestaurant: null
 };
 
 const PrincipalImage = props => {
@@ -180,10 +181,10 @@ const PrincipalImage = props => {
   );
 };
 PrincipalImage.propTypes = {
-  principalImage: PropTypes.string,
+  principalImage: PropTypes.string
 };
 PrincipalImage.defaultProps = {
-  principalImage: '',
+  principalImage: ''
 };
 
 const UploadImage = props => {
@@ -193,25 +194,31 @@ const UploadImage = props => {
     Alert.alert('Eliminar Imagen', 'Seguro que decea eliminar imagen?', [
       {
         text: 'Cancelar',
-        style: 'cancel',
+        style: 'cancel'
       },
       {
         text: 'Eliminar',
         style: 'destructive',
-        onPress: () => setImagesSelected(imagesSelected.filter(imagesUrl => imagesUrl !== image)),
-      },
+        onPress: () =>
+          setImagesSelected(
+            imagesSelected.filter(imagesUrl => imagesUrl !== image)
+          )
+      }
     ]);
   };
 
   const imageSelect = async () => {
-    const resultPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    const resultPermissionCamera = resultPermission.permissions.cameraRoll.status;
+    const resultPermission = await Permissions.askAsync(
+      Permissions.CAMERA_ROLL
+    );
+    const resultPermissionCamera =
+      resultPermission.permissions.cameraRoll.status;
     if (resultPermissionCamera === 'denied') {
       toastRef.current.show('Es necesario aceptar los permisos de la galeria.');
     } else {
       const result = await ImagePicker.launchImageLibraryAsync({
         allowsEditing: true,
-        aspect: [4, 3],
+        aspect: [4, 3]
       });
       if (result.cancelled) {
         toastRef.current.show('Se ha cerrado la galeria.');
@@ -248,17 +255,24 @@ UploadImage.propTypes = {
   imagesSelected: PropTypes.arrayOf(PropTypes.string).isRequired,
   setImagesSelected: PropTypes.func.isRequired,
   toastRef: PropTypes.shape({
-    current: PropTypes.shape({ show: PropTypes.func }),
-  }).isRequired,
+    current: PropTypes.shape({ show: PropTypes.func })
+  }).isRequired
 };
 
 const Map = props => {
-  const { isVisibleMap, setIsVisibleMap, setLocationRestaurant, toastRef } = props;
+  const {
+    isVisibleMap,
+    setIsVisibleMap,
+    setLocationRestaurant,
+    toastRef
+  } = props;
   const [location, setLocation] = useState(null);
 
   useEffect(() => {
     const getCurrentLocation = async () => {
-      const resultPermissions = await Permissions.askAsync(Permissions.LOCATION);
+      const resultPermissions = await Permissions.askAsync(
+        Permissions.LOCATION
+      );
       const statusPermissions = resultPermissions.permissions.location.status;
       if (statusPermissions !== 'granted') {
         toastRef.current.show('Debe aceptar los permisos de localización');
@@ -268,7 +282,7 @@ const Map = props => {
           latitude: loc.coords.latitude,
           longitude: loc.coords.longitude,
           latitudeDelta: 0.001,
-          longitudeDelta: 0.001,
+          longitudeDelta: 0.001
         });
       }
     };
@@ -317,8 +331,8 @@ Map.propTypes = {
   setIsVisibleMap: PropTypes.func.isRequired,
   setLocationRestaurant: PropTypes.func.isRequired,
   toastRef: PropTypes.shape({
-    current: PropTypes.shape({ show: PropTypes.func }),
-  }).isRequired,
+    current: PropTypes.shape({ show: PropTypes.func })
+  }).isRequired
 };
 
 // define your styles
@@ -327,7 +341,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginLeft: 20,
     marginRight: 20,
-    marginTop: 30,
+    marginTop: 30
   },
   containerIcon: {
     alignItems: 'center',
@@ -335,58 +349,58 @@ const styles = StyleSheet.create({
     marginRight: 10,
     height: 70,
     width: 70,
-    backgroundColor: '#e3e3e3',
+    backgroundColor: '#e3e3e3'
   },
   miniatureStyles: {
     width: 70,
     height: 70,
-    marginRight: 10,
+    marginRight: 10
   },
   principalImage: {
     alignItems: 'center',
     height: 200,
-    marginBottom: 20,
+    marginBottom: 20
   },
   viewForm: {
     marginLeft: 10,
-    marginRight: 10,
+    marginRight: 10
   },
   inputContainer: {
-    marginBottom: 10,
+    marginBottom: 10
   },
   inputTextAreaContainer: {
     padding: 0,
     margin: 0,
-    width: '100%',
+    width: '100%'
   },
   textarea: {
-    textAlignVertical: 'top', // hack android
+    textAlignVertical: 'top' // hack android
   },
   mapStyle: {
     width: '100%',
-    height: 500,
+    height: 500
   },
   viewMapBtn: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 10,
+    marginTop: 10
   },
   viewMapBtnContainerSave: {
-    paddingRight: 5,
+    paddingRight: 5
   },
   viewMapBtnSave: {
-    backgroundColor: '#00a680',
+    backgroundColor: '#00a680'
   },
   viewMapBtnContainerCancel: {
-    paddingLeft: 5,
+    paddingLeft: 5
   },
   viewMapBtnCancel: {
-    backgroundColor: '#a60d0d',
+    backgroundColor: '#a60d0d'
   },
   addRestaurantBtn: {
     backgroundColor: '#00a680',
-    margin: 20,
-  },
+    margin: 20
+  }
 });
 
 export default AddRestaurantForm;
