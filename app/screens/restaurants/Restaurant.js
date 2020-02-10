@@ -16,7 +16,7 @@ const db = firebase.firestore(firebaseApp);
 
 const Restaurant = props => {
   const { navigation } = props;
-  const { restaurant } = navigation.state.params.restaurant.item;
+  const { restaurant } = navigation.state.params;
   const [imageRestaurant, setImageRestaurant] = useState([]);
   const [rating, setRating] = useState(restaurant.rating);
   const [isFavourite, setIsFavourite] = useState(false);
@@ -144,8 +144,6 @@ const Restaurant = props => {
   );
 };
 
-export default Restaurant;
-
 const TitleRestaurant = props => {
   const { name, description, rating } = props;
 
@@ -244,3 +242,5 @@ const styles = StyleSheet.create({
     paddingRight: 5
   }
 });
+
+export default Restaurant;

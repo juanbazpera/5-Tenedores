@@ -53,8 +53,6 @@ export default function TopRestaurants(props) {
 const styles = StyleSheet.create({
   viewBody: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
+    backgroundColor: '#fff'
   }
 });

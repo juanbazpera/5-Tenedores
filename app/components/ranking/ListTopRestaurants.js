@@ -61,7 +61,7 @@ const Restaurant = props => {
         break;
     }
   }, []);
-  console.log(restaurant);
+
   return (
     <TouchableOpacity
       onPress={() =>

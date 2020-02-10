@@ -1,13 +1,17 @@
 // import liraries
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   FlatList,
-  ActivityIndicator
+  ActivityIndicator,
+  StyleSheet,
+  TouchableOpacity
 } from 'react-native';
-import RestaurantRender from './RestaurantRender';
+
+import * as firebase from 'firebase';
+
+import { Image } from 'react-native-elements';
 
 // create a component
 const ListRestaurants = props => {
@@ -19,7 +23,7 @@ const ListRestaurants = props => {
         <FlatList
           data={restaurants}
           renderItem={restaurant => (
-            <RestaurantRender restaurant={restaurant} navigation={navigation} />
+            <Restaurant restaurant={restaurant} navigation={navigation} />
           )}
           keyExtractor={(item, index) => index.toString()}
           onEndReached={handleLoadMore}
@@ -34,6 +38,50 @@ const ListRestaurants = props => {
       <ActivityIndicator size="large" />
       <Text style={{ marginTop: 15 }}>Cargando restaurantes</Text>
     </View>
+  );
+};
+
+const Restaurant = props => {
+  const { restaurant, navigation } = props;
+  const { name, address, description, images } = restaurant.item.restaurant;
+  const [imageRestaurant, setImageRestaurant] = useState(null);
+  useEffect(() => {
+    const image = images[0];
+    firebase
+      .storage()
+      .ref(`restaurants-images/${image}`)
+      .getDownloadURL()
+      .then(result => {
+        setImageRestaurant(result);
+      });
+  }, []);
+
+  return (
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('Restaurant', {
+          restaurant: restaurant.item.restaurant
+        })
+      }
+    >
+      <View style={styles.viewRestaurant}>
+        <View style={styles.viewRestaurantImage}>
+          <Image
+            resizeMode="cover"
+            source={{ uri: imageRestaurant }}
+            style={styles.imageRestaurant}
+            PlaceholderContent={<ActivityIndicator color="#fff" />}
+          />
+        </View>
+        <View>
+          <Text style={styles.restaurantName}>{name}</Text>
+          <Text style={styles.restaurantAddress}>{address}</Text>
+          <Text style={styles.restaurantDescription}>
+            {description.substring(0, 60)}...
+          </Text>
+        </View>
+      </View>
+    </TouchableOpacity>
   );
 };
 
@@ -69,6 +117,29 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20,
     alignItems: 'center'
+  },
+  viewRestaurant: {
+    flexDirection: 'row',
+    margin: 10
+  },
+  viewRestaurantImage: {
+    marginRight: 15
+  },
+  imageRestaurant: {
+    width: 80,
+    height: 80
+  },
+  restaurantName: {
+    fontWeight: 'bold'
+  },
+  restaurantAddress: {
+    paddingTop: 2,
+    color: 'grey'
+  },
+  restaurantDescription: {
+    paddingTop: 2,
+    color: 'grey',
+    width: 300
   }
 });
 
