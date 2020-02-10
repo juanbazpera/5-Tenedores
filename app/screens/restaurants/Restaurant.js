@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, Dimensions, StyleSheet, ScrollView } from 'react-native';
 import { Rating, Icon, ListItem } from 'react-native-elements';
-import * as firebase from 'firebase';
+import Toast from 'react-native-easy-toast';
+import { firebaseApp } from '../../utils/FireBase';
+import firebase from 'firebase/app';
 import 'firebase/firestore';
 
 import Banner from '../../components/Banner';
@@ -10,11 +12,20 @@ import ListReview from '../../components/restaurants/ListReview';
 
 const screenWidth = Dimensions.get('window').width;
 
+const db = firebase.firestore(firebaseApp);
+
 const Restaurant = props => {
   const { navigation } = props;
   const { restaurant } = navigation.state.params.restaurant.item;
   const [imageRestaurant, setImageRestaurant] = useState([]);
   const [rating, setRating] = useState(restaurant.rating);
+  const [isFavourite, setIsFavourite] = useState(false);
+  const [userLogged, setUserLogged] = useState(false);
+  const toastRef = useRef();
+
+  firebase.auth().onAuthStateChanged(user => {
+    user ? setUserLogged(true) : setUserLogged(false);
+  });
 
   useEffect(() => {
     const arrayUrls = [];
@@ -34,8 +45,79 @@ const Restaurant = props => {
     })();
   }, []);
 
+  useEffect(() => {
+    if (userLogged) {
+      db.collection('favourites')
+        .where('idRestaurant', '==', restaurant.id)
+        .where('idUser', '==', firebase.auth().currentUser.uid)
+        .get()
+        .then(response => {
+          if (response.docs.length === 1) {
+            setIsFavourite(true);
+          }
+        });
+    }
+  }, []);
+
+  const AddToFavourite = () => {
+    const payload = {
+      idUser: firebase.auth().currentUser.uid,
+      idRestaurant: restaurant.id
+    };
+    db.collection('favourites')
+      .add(payload)
+      .then(() => {
+        setIsFavourite(true);
+        toastRef.current.show('Restaurante agregado a Favoritos.');
+      })
+      .catch(err => {
+        console.log(err);
+        toastRef.current.show('Error al añadir el restaurante a favoritos.');
+      });
+  };
+
+  const removeFavourite = () => {
+    db.collection('favourites')
+      .where('idRestaurant', '==', restaurant.id)
+      .where('idUser', '==', firebase.auth().currentUser.uid)
+      .get()
+      .then(response => {
+        response.forEach(doc => {
+          const idRestaurant = doc.id;
+          db.collection('favourites')
+            .doc(idRestaurant)
+            .delete()
+            .then(() => {
+              setIsFavourite(false);
+              toastRef.current.show('Restaurante quitado de Favoritos.');
+            })
+            .catch(err => {
+              console.log(err);
+              toastRef.current.show(
+                'Error al quitar restaurante de favoritos.'
+              );
+            });
+        });
+      })
+      .catch(() => {
+        toastRef.current.show('Error al quitar restaurante de favoritos.');
+      });
+  };
+
   return (
     <ScrollView style={styles.viewBody}>
+      {userLogged && (
+        <View style={styles.viewFavourite}>
+          <Icon
+            type="material-community"
+            name={isFavourite ? 'heart' : 'heart-outline'}
+            onPress={isFavourite ? removeFavourite : AddToFavourite}
+            size={35}
+            color={isFavourite ? '#00a680' : '#000'}
+            underlayColor="transparent"
+          />
+        </View>
+      )}
       <Banner arrayImages={imageRestaurant} width={screenWidth} height={200} />
       <TitleRestaurant
         name={restaurant.name}
@@ -51,6 +133,12 @@ const Restaurant = props => {
         setRating={setRating}
         navigation={navigation}
         idRestaurant={restaurant.id}
+      />
+      <Toast
+        ref={toastRef}
+        position="bottom"
+        positionValue={250}
+        opacity={0.8}
       />
     </ScrollView>
   );
@@ -142,5 +230,17 @@ const styles = StyleSheet.create({
   containerListItem: {
     borderBottomColor: '#d8d8d8',
     borderBottomWidth: 1
+  },
+  viewFavourite: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    zIndex: 2,
+    backgroundColor: 'white',
+    borderBottomLeftRadius: 100,
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 15,
+    paddingRight: 5
   }
 });

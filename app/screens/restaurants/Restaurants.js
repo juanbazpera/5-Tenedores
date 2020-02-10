@@ -29,14 +29,14 @@ export default function Restaurants(props) {
   }, []);
 
   useEffect(() => {
-    db.collection('restaurants')
-      .get()
-      .then(snap => {
-        setTotalRestaurants(snap.size);
-      });
-
-    const getRestaurants = async () => {
+    (() => {
       setIsLoading(true);
+      db.collection('restaurants')
+        .get()
+        .then(snap => {
+          setTotalRestaurants(snap.size);
+        });
+
       const resultRestaurants = [];
 
       const restaurantsResult = db
@@ -44,7 +44,7 @@ export default function Restaurants(props) {
         .orderBy('createAt', 'desc')
         .limit(limitRestaurants);
 
-      await restaurantsResult
+      restaurantsResult
         .get()
         .then(response => {
           setStartRestaurants(response.docs[response.docs.length - 1]);
@@ -60,9 +60,7 @@ export default function Restaurants(props) {
           console.log('Error: ', error);
         });
       setIsLoading(false);
-    };
-
-    getRestaurants();
+    })();
     setIsReloadRestaurants(false);
   }, [isReloadRestaurants]);
 

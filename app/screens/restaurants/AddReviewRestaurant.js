@@ -1,5 +1,11 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard
+} from 'react-native';
 import { AirbnbRating, Button, Input } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
 import Loading from '../../components/Loading';
@@ -91,24 +97,26 @@ const AddReviewRestaurant = props => {
           onFinishRating={value => setRating(value)}
         />
       </View>
-      <View style={styles.formReview}>
-        <Input
-          placeholder="Titulo"
-          onChange={e => setTitle(e.nativeEvent.text)}
-        />
-        <Input
-          placeholder="Comentario"
-          multiline
-          inputContainerStyle={styles.textArea}
-          onChange={e => setReview(e.nativeEvent.text)}
-        />
-        <Button
-          containerStyle={styles.btnContainer}
-          buttonStyle={styles.btn}
-          title="Enviar comentario"
-          onPress={addReview}
-        />
-      </View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={styles.formReview}>
+          <Input
+            placeholder="Titulo"
+            onChange={e => setTitle(e.nativeEvent.text)}
+          />
+          <Input
+            placeholder="Comentario"
+            multiline
+            inputContainerStyle={styles.textArea}
+            onChange={e => setReview(e.nativeEvent.text)}
+          />
+          <Button
+            containerStyle={styles.btnContainer}
+            buttonStyle={styles.btn}
+            title="Enviar comentario"
+            onPress={addReview}
+          />
+        </View>
+      </TouchableWithoutFeedback>
       <Toast
         ref={toastRef}
         position="bottom"

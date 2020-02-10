@@ -12,6 +12,11 @@ const ListReview = props => {
   const { navigation, idRestaurant, setRating } = props;
   const [reviews, setReviews] = useState([]);
   const [reviewReload, setReviewReload] = useState(false);
+  const [userLogged, setUserLogged] = useState();
+
+  firebase.auth().onAuthStateChanged(user => {
+    user ? setUserLogged(true) : setUserLogged(false);
+  });
 
   useEffect(() => {
     (async () => {
@@ -45,7 +50,7 @@ const ListReview = props => {
 
   return (
     <View>
-      {firebase.auth().currentUser && (
+      {userLogged ? (
         <Button
           title="Agregar opinion"
           buttonStyle={styles.btnAddReview}
@@ -62,9 +67,57 @@ const ListReview = props => {
             })
           }
         />
+      ) : (
+        <View style={{ flex: 1 }}>
+          <Text
+            style={{ textAlign: 'center', color: '#00a680', padding: 20 }}
+            onPress={() => navigation.navigate('Login')}
+          >
+            Para escribir un comentario, debe logearse{'\n'}
+            <Text style={{ fontWeight: 'bold' }}>
+              Pulsa AQUI para iniciar sesion
+            </Text>
+          </Text>
+        </View>
       )}
 
-      <Text>Lista de comentarios</Text>
+      <FlatList
+        data={reviews}
+        renderItem={review => Review(review)}
+        keyExtractor={(item, index) => index.toString()}
+      />
+    </View>
+  );
+};
+
+const Review = props => {
+  const { title, review, rating, createAt, avatarUser } = props.item;
+  const createDateReview = new Date(createAt.seconds * 1000);
+  return (
+    <View style={styles.viewReview}>
+      <View style={styles.viewImageAvatar}>
+        <Avatar
+          size="large"
+          rounded
+          containerStyle={styles.imageAvatarUser}
+          source={{
+            uri: avatarUser
+              ? avatarUser
+              : 'https://api.adorable.io/avatars/50/abott@adorable.png'
+          }}
+        />
+      </View>
+      <View style={styles.viewInfo}>
+        <Text style={styles.reviewTitle}>{title}</Text>
+        <Text style={styles.reviewText}>{review}</Text>
+        <Rating imageSize={15} startingValue={rating} readonly />
+        <Text style={styles.reviewDate}>
+          {createDateReview.getDate()}/{createDateReview.getMonth() + 1}/
+          {createDateReview.getFullYear()} - {createDateReview.getHours()}:
+          {createDateReview.getMinutes() < 10 ? '0' : ''}
+          {createDateReview.getMinutes()}
+        </Text>
+      </View>
     </View>
   );
 };
@@ -75,6 +128,40 @@ const styles = StyleSheet.create({
   },
   btnAddTitleReview: {
     color: '#00a680'
+  },
+  viewReview: {
+    flexDirection: 'row',
+    margin: 10,
+    paddingBottom: 20,
+    borderBottomColor: '#e3e3e3',
+    borderBottomWidth: 1
+  },
+  viewImageAvatar: {
+    marginRight: 15
+  },
+  imageAvatarUser: {
+    width: 50,
+    height: 50
+  },
+  viewInfo: {
+    flex: 1,
+    alignItems: 'flex-start'
+  },
+  reviewTitle: {
+    fontWeight: 'bold'
+  },
+  reviewText: {
+    paddingTop: 2,
+    color: '#c3c3c3',
+    marginBottom: 5
+  },
+  reviewDate: {
+    marginTop: 5,
+    color: '#c3c3c3',
+    fontSize: 12,
+    position: 'absolute',
+    right: 0,
+    bottom: 0
   }
 });
 

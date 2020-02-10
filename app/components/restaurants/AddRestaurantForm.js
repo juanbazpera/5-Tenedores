@@ -36,32 +36,29 @@ const AddRestaurantForm = props => {
       toastRef.current.show('Debe localizar el restaurante en el mapa');
     } else {
       setIsLoading(true);
-      db.collection('restaurants')
-        .add({
-          name: restaurantName,
-          address: restaurantAddress,
-          description: restaurantDescription,
-          location: locationRestaurant,
-          images: [],
-          rating: 0,
-          ratingTotal: 0,
-          quantityVoting: 0,
-          createAt: new Date(),
-          createBy: firebase.auth().currentUser.uid
-        })
-        .then(success => {
-          uploadImageStorage(imagesSelected).then(imagesArray => {
-            success.update({ images: imagesArray });
+      uploadImageStorage(imagesSelected)
+        .then(arrayImages => {
+          db.collection('restaurants').add({
+            name: restaurantName,
+            address: restaurantAddress,
+            description: restaurantDescription,
+            location: locationRestaurant,
+            images: arrayImages,
+            rating: 0,
+            ratingTotal: 0,
+            quantityVoting: 0,
+            createAt: new Date(),
+            createBy: firebase.auth().currentUser.uid
           });
+        })
+        .then(() => {
           setIsLoading(false);
-          setIsReloadRestaurants(true);
           navigation.navigate('Restaurants');
         })
-        .catch(error => {
+        .catch(() => {
           setIsLoading(false);
-          toastRef.current.show('Error al crear el restaurante');
+          toastRef.current.show('Error al subir el restaurante.');
         });
-      // });
     }
   };
 
@@ -73,9 +70,10 @@ const AddRestaurantForm = props => {
         const blob = await response.blob();
         const ref = firebase
           .storage()
-          .ref(`restaurants-images/`)
+          .ref('restaurants-images/')
           .child(uuid());
         await ref.put(blob).then(result => {
+          console.log(result);
           imagesBlob.push(result.metadata.name);
         });
       })
