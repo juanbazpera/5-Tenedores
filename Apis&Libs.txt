@@ -23,3 +23,7 @@
 -- ImagePicker from 'expo-image-picker' para elegir una imagen de la galeria
 
 -- uuid para crear id's dinamicos.
+
+-- fireSql para hacer sintaxis de mysql en firebase
+
+-- use-debounce para solucionar cuando se busca demaciado rapido el error de que "Recreando un componente que todavia no ha sido desmontado"

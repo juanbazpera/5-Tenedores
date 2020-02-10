@@ -4,24 +4,38 @@
     "slug": "5-tenedores",
     "privacy": "public",
     "sdkVersion": "35.0.0",
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#00a680"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.juanchobaz.tenedores",
+      "buildNumber": "1.0.0",
+      "supportsTablet": false
     },
     "android": {
-      "permissions": ["CAMERA_ROLL", "LOCATION"]
-    }
+      "package": "com.juanchobaz.tenedores",
+      "versionCode": 1,
+      "permissions": [
+        "CAMERA_ROLL",
+        "LOCATION"
+      ]
+    },
+    "description": ""
   }
 }
