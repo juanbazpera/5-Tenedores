@@ -1,13 +1,16 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { createAppContainer } from 'react-navigation';
-
+import restaurantsScreenStack from './RestaurantsStack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Icon } from 'react-native-elements';
 
-import restaurantsScreenStack from './RestaurantsStack';
+import firebase from 'firebase/app';
+
 import topRestaurantsScreenStack from './TopRestaurantsStack';
 import searchScreenStack from './SearchStack';
 import accountScreenStack from './AccountStack';
+import favouritesScreenStack from './FavouritesStack';
 
 const RootStack = createBottomTabNavigator(
   {
@@ -22,8 +25,22 @@ const RootStack = createBottomTabNavigator(
             size={22}
             color={tintColor}
           />
-        ),
-      }),
+        )
+      })
+    },
+    Favourites: {
+      screen: favouritesScreenStack,
+      navigationOptions: () => ({
+        tabBarLabel: 'Favoritos',
+        tabBarIcon: ({ tintColor }) => (
+          <Icon
+            name="heart-outline"
+            type="material-community"
+            size={22}
+            color={tintColor}
+          />
+        )
+      })
     },
     TopRestaurants: {
       screen: topRestaurantsScreenStack,
@@ -36,8 +53,8 @@ const RootStack = createBottomTabNavigator(
             size={22}
             color={tintColor}
           />
-        ),
-      }),
+        )
+      })
     },
     Search: {
       screen: searchScreenStack,
@@ -50,8 +67,8 @@ const RootStack = createBottomTabNavigator(
             size={22}
             color={tintColor}
           />
-        ),
-      }),
+        )
+      })
     },
     Account: {
       screen: accountScreenStack,
@@ -64,20 +81,20 @@ const RootStack = createBottomTabNavigator(
             size={22}
             color={tintColor}
           />
-        ),
-      }),
-    },
+        )
+      })
+    }
   },
   {
     // Si initialRouteName y Order no estan definidas toma el orden
     // que se declararon anteriormente
-    initialRouteName: 'Account',
-    order: ['Restaurants', 'TopRestaurants', 'Search', 'Account'],
+    initialRouteName: 'Restaurants',
+    order: ['Restaurants', 'Favourites', 'TopRestaurants', 'Search', 'Account'],
     tabBarOptions: {
       inactiveTintColor: '#646464',
-      activeTintColor: '#00A680',
-    },
-  },
+      activeTintColor: '#00A680'
+    }
+  }
 );
 
 export default createAppContainer(RootStack);

@@ -1,39 +1,30 @@
 // import liraries
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import * as firebase from 'firebase';
 
-import MyAccountGuest from '../../components/MyAccount/MyAccountGuest';
-import MyAccountUser from '../../components/MyAccount/MyAccountUser';
+import UserGuest from './UserGuest';
+import UserLogged from './UserLogged';
+import Loading from '../../components/Loading';
 
-export default function MyAccount(props) {
+export default function MyAccount() {
   const [login, setLogin] = useState(false);
 
   useEffect(() => {
-    const isUserLogin = async () => {
-      await firebase.auth().onAuthStateChanged(isLoggin => {
-        setLogin(isLoggin);
+    const isLogged = async () => {
+      await firebase.auth().onAuthStateChanged(user => {
+        return !user ? setLogin(false) : setLogin(true);
       });
     };
-    setLogin(() => isUserLogin());
+    isLogged();
   }, []);
-
-  const goToScreen = nameScreen => {
-    const { navigation } = props;
-    navigation.navigate(nameScreen);
-  };
 
   const logout = () => {
     firebase.auth().signOut();
   };
 
-  if (login) {
-    return <MyAccountUser logout={() => logout()} />;
+  if (login === null) {
+    return <Loading isVisible text="Cargando..." />;
   }
-  return <MyAccountGuest goToScreen={() => goToScreen('Login')} />;
+  if (login) return <UserLogged logout={() => logout()} />;
+  return <UserGuest />;
 }
-
-MyAccount.propTypes = {
-  navigation: PropTypes.shape({ navigate: PropTypes.func })
-    .isRequired,
-};

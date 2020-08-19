@@ -1,23 +1,18 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ActivityIndicator,
-} from 'react-native';
+import { Text, StyleSheet, ScrollView, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { Button, Image } from 'react-native-elements';
+import { withNavigation } from 'react-navigation';
 
 import backgroundImage from '../../../assets/img/image-my-account-guest-01.jpg';
 
-export default function MyAccountGuest(props) {
-  const { goToScreen } = props;
+function UserGuest(props) {
+  const { navigation } = props;
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} centerContent>
       <Image
         style={styles.image}
         source={backgroundImage}
-        PlaceholderContent={<ActivityIndicator />}
         resizeMode="contain"
       />
       <Text style={styles.title}>
@@ -28,45 +23,55 @@ export default function MyAccountGuest(props) {
         mejores restaurantes de una forma sencilla, vota cual te ha
         gustado mas y comenta como ha sido tu experiencia.
       </Text>
-      <Button
-        buttonStyle={styles.btnViewProfile}
-        title="Ver tu perfil"
-        onPress={() => goToScreen('Login')}
-      />
-    </View>
+      <View style={styles.viewBtn}>
+        <Button
+          buttonStyle={styles.btnViewStyle}
+          containerStyle={styles.btnViewContainer}
+          title="Ver tu perfil"
+          onPress={() => navigation.navigate('Login')}
+        />
+      </View>
+    </ScrollView>
   );
 }
 
-MyAccountGuest.propTypes = {
-  goToScreen: PropTypes.func.isRequired,
+UserGuest.propTypes = {
+  navigation: PropTypes.shape({ navigate: PropTypes.func })
+    .isRequired,
 };
 
 // define your styles
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingLeft: 30,
-    paddingRight: 30,
+    marginLeft: 30,
+    marginRight: 30,
   },
   image: {
     height: 300,
-    width: 300,
+    width: '100%',
     marginBottom: 40,
   },
   title: {
     fontWeight: 'bold',
     fontSize: 19,
     marginBottom: 10,
+    textAlign: 'center',
   },
   description: {
     lineHeight: 15,
     textAlign: 'center',
     marginBottom: 20,
   },
-  btnViewProfile: {
-    width: 200,
+  viewBtn: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  btnViewStyle: {
     backgroundColor: '#00a680',
   },
+  btnViewContainer: {
+    width: '70%',
+  },
 });
+
+export default withNavigation(UserGuest);

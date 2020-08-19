@@ -1,30 +1,30 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.21.1/libexec/bin/yarn.js install
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add uuid
 
 PATH: 
-  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+  C:\Program Files (x86)\CollabNet\Subversion Client;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Oracle11\bin;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Novell\GroupWise;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Aladdin\eToken\PKIClient\x32;C:\Program Files\Aladdin\eToken\PKIClient\x64;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\nodejs\;C:\Python37\Scripts\;C:\Python37\;C:\Users\jubaz\AppData\Local\Programs\Python\Launcher\;C:\Users\jubaz\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk1.8.0_221\bin;%CATALINA_HOME%\bin;C:\Users\jubaz\Desktop\vileus-workspace\apache-maven-3.5.3\bin;C:\Program Files\Java\jre1.8.0_221\bin;C:\Program Files\Git\cmd;C:\Users\jubaz\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\jubaz\AppData\Local\Yarn\bin;C:\Program Files (x86)\Yarn\bin;C:\Users\jubaz\AppData\Roaming\npm;C:\Users\jubaz\Desktop\platform-tools;C:\vwget-2.4;Y:.;X:.;W:.;Z:.
 
 Yarn version: 
-  1.21.1
+  1.19.1
 
 Node version: 
-  12.14.1
+  10.16.3
 
 Platform: 
   darwin x64
 
 Trace: 
-  Error: connect ENETUNREACH 104.16.17.35:443 - Local (0.0.0.0:52173)
-      at internalConnect (net.js:913:16)
-      at defaultTriggerAsyncIdScope (internal/async_hooks.js:305:12)
-      at emitLookup (net.js:1056:9)
-      at /usr/local/Cellar/yarn/1.21.1/libexec/lib/cli.js:107440:28
-      at /usr/local/Cellar/yarn/1.21.1/libexec/lib/cli.js:107349:13
-      at RawTask.module.exports.RawTask.call (/usr/local/Cellar/yarn/1.21.1/libexec/lib/cli.js:83573:19)
-      at flush (/usr/local/Cellar/yarn/1.21.1/libexec/lib/cli.js:83655:29)
-      at processTicksAndRejections (internal/process/task_queues.js:76:11)
-      at runNextTicks (internal/process/task_queues.js:63:3)
-      at processImmediate (internal/timers.js:412:9)
+  Error: https://registry.yarnpkg.com/term-size/-/term-size-2.1.0.tgz: Request failed "403 Forbidden"
+      at ResponseError.ExtendableBuiltin (C:\Program Files (x86)\Yarn\lib\cli.js:696:66)
+      at new ResponseError (C:\Program Files (x86)\Yarn\lib\cli.js:802:124)
+      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:66105:16)
+      at Request.emit (events.js:198:13)
+      at Request.module.exports.Request.onRequestResponse (C:\Program Files (x86)\Yarn\lib\cli.js:141441:10)
+      at ClientRequest.emit (events.js:203:15)
+      at HTTPParser.parserOnIncomingClient [as onIncoming] (_http_client.js:556:21)
+      at HTTPParser.parserOnHeadersComplete (_http_common.js:109:17)
+      at TLSSocket.socketOnData (_http_client.js:442:20)
+      at TLSSocket.emit (events.js:198:13)
 
 npm manifest: 
   {
@@ -38,9 +38,14 @@ npm manifest:
       "eject": "expo eject"
     },
     "dependencies": {
+      "add": "^2.0.6",
+      "axios": "^0.19.0",
       "expo": "^35.0.0",
-      "expo-cli": "3.10.2",
+      "expo-cli": "^3.11.1",
       "expo-facebook": "^7.0.0",
+      "expo-image-picker": "^7.0.0",
+      "expo-location": "~7.0.0",
+      "expo-permissions": "^7.0.0",
       "firebase": "^7.5.0",
       "loglevel": "^1.6.6",
       "metro-config": "^0.57.0",
@@ -48,15 +53,20 @@ npm manifest:
       "react": "16.8.3",
       "react-dom": "16.8.3",
       "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
+      "react-native-action-button": "^2.8.5",
       "react-native-easy-toast": "^1.2.0",
       "react-native-elements": "^1.2.7",
       "react-native-gesture-handler": "~1.3.0",
+      "react-native-keyboard-aware-scroll-view": "^0.9.1",
+      "react-native-maps": "~0.25.0",
       "react-native-reanimated": "~1.2.0",
+      "react-native-textarea": "^1.0.3",
       "react-native-web": "^0.11.7",
       "react-navigation": "^4.0.10",
       "react-navigation-stack": "^1.10.3",
       "react-navigation-tabs": "^2.5.6",
-      "tcomb-form-native": "^0.6.20"
+      "tcomb-form-native": "^0.6.20",
+      "yarn": "^1.21.1"
     },
     "devDependencies": {
       "babel-eslint": "^10.0.3",
@@ -1242,10 +1252,10 @@ Lockfile:
       pouchdb-collections "^1.0.1"
       tiny-queue "^0.2.1"
   
-  "@expo/xdl@^57.1.2":
-    version "57.1.2"
-    resolved "https://registry.yarnpkg.com/@expo/xdl/-/xdl-57.1.2.tgz#b7272e45f8a4040fd4ae288651b49e13c2141e9c"
-    integrity sha512-kkqNH7UE684yFO0h+BIExXunxrX5ePPyiHEWIglyyXWE+zbQavQiWhrySz7XwA1PpQUprsdzpRcurDbDK04sNA==
+  "@expo/xdl@57.2.1":
+    version "57.2.1"
+    resolved "https://registry.yarnpkg.com/@expo/xdl/-/xdl-57.2.1.tgz#9e3daa6e597cce7595a2844fed2b49857ad29060"
+    integrity sha512-ITRey8tSz2NlZ/KyII0OMi70kubNHdUumJHkCiuGU8+zzWpgbBQXyaucQNEenBA+8Zec6cytSEEYO+/E2cMxRg==
     dependencies:
       "@expo/bunyan" "3.0.2"
       "@expo/config" "^2.5.2"
@@ -2205,6 +2215,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.1.0.tgz#949d36f2c292535da602283586c2477c57eb2d6c"
     integrity sha512-kL5CuoXA/dgxlBbVrflsflzQ3PAas7RYZB52NOm/6839iVYJgKMJ3cQJD+t2i5+qFa8h3MDpEOJiS64E8JLnSQ==
   
+  add@^2.0.6:
+    version "2.0.6"
+    resolved "https://registry.yarnpkg.com/add/-/add-2.0.6.tgz#248f0a9f6e5a528ef2295dbeec30532130ae2235"
+    integrity sha1-JI8Kn25aUo7yKV2+7DBTITCuIjU=
+  
   address@1.1.0:
     version "1.1.0"
     resolved "https://registry.yarnpkg.com/address/-/address-1.1.0.tgz#ef8e047847fcd2c5b6f50c16965f924fd99fe709"
@@ -2684,7 +2699,7 @@ Lockfile:
     dependencies:
       is-retry-allowed "^1.1.0"
   
-  axios@0.19.0:
+  axios@0.19.0, axios@^0.19.0:
     version "0.19.0"
     resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.0.tgz#8e09bff3d9122e133f7b8101c8fbdd00ed3d2ab8"
     integrity sha512-1uvKqKQta3KBxIz14F2v06AEHZ/dIoeKfbTRkK1E5oqjDnuEerLmYTgJB5AiQZHJcljpg1TuRzdjDR06qNk0DQ==
@@ -5255,10 +5270,10 @@ Lockfile:
       path-browserify "^1.0.0"
       url-parse "^1.4.4"
   
-  expo-cli@3.10.2:
-    version "3.10.2"
-    resolved "https://registry.yarnpkg.com/expo-cli/-/expo-cli-3.10.2.tgz#fa19b201ccd9a4515ddf9beef0638cdeea19ba26"
-    integrity sha512-cF2d7ghrf7pewWIE8blh1IPoCKIDEPWMkRpypFJ5jgapmdwFGQGbUDFbIylBQv+MALdRsmIiS84ikuV72/gE8w==
+  expo-cli@^3.11.1:
+    version "3.11.1"
+    resolved "https://registry.yarnpkg.com/expo-cli/-/expo-cli-3.11.1.tgz#ded8e248e2b08e26cb8e5ed057d9ff1927389251"
+    integrity sha512-efLwUDLhn37+P06sxFzuszgRWssUVJOTlVab/w4hGYi0mYI/0weSHiZggA/NXJfdeLikZrTR7Wk5OChRPHyRiQ==
     dependencies:
       "@expo/build-tools" "0.1.0-alpha.8"
       "@expo/bunyan" "3.0.2"
@@ -5268,7 +5283,7 @@ Lockfile:
       "@expo/package-manager" "^0.0.1"
       "@expo/simple-spinner" "1.0.2"
       "@expo/spawn-async" "1.5.0"
-      "@expo/xdl" "^57.1.2"
+      "@expo/xdl" "57.2.1"
       "@types/cli-table" "^0.3.0"
       "@types/untildify" "^3.0.0"
       ansi-regex "^4.1.0"
@@ -5343,6 +5358,11 @@ Lockfile:
     dependencies:
       fontfaceobserver "^2.1.0"
   
+  expo-image-picker@^7.0.0:
+    version "7.0.0"
+    resolved "https://registry.yarnpkg.com/expo-image-picker/-/expo-image-picker-7.0.0.tgz#e4a5a52bd6f9655f75ecf3cc866aa9bb0c99e24b"
+    integrity sha512-LeGdAqbeuB2KsT369ns1kDtCGbyDCmY2gIFlf/rsD3+UmagRFX9emZLGPEnUNdCWXoctSejjFwxDnCUtpvL6yw==
+  
   expo-keep-awake@~7.0.0:
     version "7.0.0"
     resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-7.0.0.tgz#131f56bc1ed8dd66e64a159afd7eaef26939d929"
@@ -5367,7 +5387,7 @@ Lockfile:
     dependencies:
       "@expo/image-utils" "^0.2.9"
   
-  expo-permissions@~7.0.0:
+  expo-permissions@^7.0.0, expo-permissions@~7.0.0:
     version "7.0.0"
     resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-7.0.0.tgz#f4135c3cf8e49c673a9a714459a1eb2b40fe2092"
     integrity sha512-C+qyVz+pdZO4YpVR2HSC3gsBZg0Qb8brCFgzmDmWcAtgrOiHClaLPdhI2XtQuGh8ubXcKPUGZp++UCEGiG0Jxg==
@@ -10945,6 +10965,13 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
     integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
   
+  react-native-action-button@^2.8.5:
+    version "2.8.5"
+    resolved "https://registry.yarnpkg.com/react-native-action-button/-/react-native-action-button-2.8.5.tgz#4152a50323a8a6b3468e6f161f9a9071f2f0739a"
+    integrity sha512-BvGZpzuGeuFR2Y6j93+vKiSqDhsF87VHvNXFs/qEYKfzT4b1ASAT/GQbgS6gNt4jRJCUnJWYrIwlBzRjesZQmQ==
+    dependencies:
+      prop-types "^15.5.10"
+  
   react-native-branch@~3.0.1:
     version "3.0.1"
     resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-3.0.1.tgz#5b07b61cbd290168cd3c3662e017ebe0f356d2ca"
@@ -10979,6 +11006,24 @@ Lockfile:
       hoist-non-react-statics "^2.3.1"
       invariant "^2.2.2"
       prop-types "^15.5.10"
+  
+  react-native-iphone-x-helper@^1.0.3:
+    version "1.2.1"
+    resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
+    integrity sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ==
+  
+  react-native-keyboard-aware-scroll-view@^0.9.1:
+    version "0.9.1"
+    resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.9.1.tgz#9e54b565a5f19b30bed12221d48921781f7630af"
+    integrity sha512-tBZ8rmjELN0F6t5UBp5CW3NYmZXgVnJSzVCssv/OqG2t6kiB+OUTqxNvUP24K+HARX4H+XaW0aEJSFQkQCv6KA==
+    dependencies:
+      prop-types "^15.6.2"
+      react-native-iphone-x-helper "^1.0.3"
+  
+  react-native-maps@~0.25.0:
+    version "0.25.0"
+    resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.25.0.tgz#81bc51eb50e33811a9e1c345cc48869413ead67d"
+    integrity sha512-PFJuW1pt+HnnnN0m0OGk29RSvICFVkK/DScX6cUk0SuCSN2DAHx0y6y57lZyYXcYqU4J4usNpfxgp/ccjASDiw==
   
   react-native-ratings@^6.3.0:
     version "6.5.0"
@@ -11016,6 +11061,13 @@ Lockfile:
     version "2.11.0"
     resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.11.0.tgz#2e57d1f617ccc88c7f452708804f3409f880b700"
     integrity sha512-vqetlxGO7A8bnqvXcB50MWpRZAImXFrDGz1WCQKdCqe03Ey3ZzENe7yLuWrtBJYlepGfOLAsmCXv+wW82Yfm1w==
+  
+  react-native-textarea@^1.0.3:
+    version "1.0.3"
+    resolved "https://registry.yarnpkg.com/react-native-textarea/-/react-native-textarea-1.0.3.tgz#aaf66735afa70f2cfc039496a25fa0ae232ceb1e"
+    integrity sha512-0aZsZUgjCbXDIYZ7ESHjJWZ8fQhzrt0gNL3hJDVqv/4jC13id4Zcuex5aZzqY83JUK3uZr7gqWtFDpO4HVQWOw==
+    dependencies:
+      prop-types "^15.5.10"
   
   react-native-view-shot@2.6.0:
     version "2.6.0"
@@ -13968,6 +14020,11 @@ Lockfile:
       which-module "^2.0.0"
       y18n "^3.2.1"
       yargs-parser "^7.0.0"
+  
+  yarn@^1.21.1:
+    version "1.21.1"
+    resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.21.1.tgz#1d5da01a9a03492dc4a5957befc1fd12da83d89c"
+    integrity sha512-dQgmJv676X/NQczpbiDtc2hsE/pppGDJAzwlRiADMTvFzYbdxPj2WO4PcNyriSt2c4jsCMpt8UFRKHUozt21GQ==
   
   yup@^0.27.0:
     version "0.27.0"

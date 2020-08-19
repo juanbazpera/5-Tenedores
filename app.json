@@ -15,7 +15,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#00a680"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -24,7 +24,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    }
+      "bundleIdentifier": "com.juanchobaz.tenedores",
+      "buildNumber": "1.0.0",
+      "supportsTablet": false
+    },
+    "android": {
+      "package": "com.juanchobaz.tenedores",
+      "versionCode": 1,
+      "permissions": [
+        "CAMERA_ROLL",
+        "LOCATION"
+      ]
+    },
+    "description": ""
   }
 }

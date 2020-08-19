@@ -9,6 +9,21 @@
     Example in 5-tenedores
     Rule to use JSX in JS "rules": { "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }], }
 
--- Formularios: tcomb-form-native https://github.com/gcanti/tcomb-form-native
+-- Formularios: tcomb-form-native https://github.com/gcanti/tcomb-form-native (No se usa mas)
+-- Toast: react-native-easy-Toast
+-- Mover screen al aparecer teclado: react-native-keyboard-aware-scroll-view setear flag enabledAndroid
 
 -- Desencriptar token de google auth en jwt.io
+
+-- Botton para agregar: react-native-action-button
+-- MapView: 'react-native-maps' para renderizar un mapa
+-- Location from 'expo-location' para obtener la location del telefono
+-- PropTypes from 'prop-types' propiedades requeridas en componentes
+-- Permissions from 'expo-permissions' permisos para solicitar, 'galeria' 'gps' 'camara' etc.
+-- ImagePicker from 'expo-image-picker' para elegir una imagen de la galeria
+
+-- uuid para crear id's dinamicos.
+
+-- fireSql para hacer sintaxis de mysql en firebase
+
+-- use-debounce para solucionar cuando se busca demaciado rapido el error de que "Recreando un componente que todavia no ha sido desmontado"
